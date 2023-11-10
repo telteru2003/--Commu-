@@ -1,0 +1,58 @@
+ <h3>新規会員登録</h3>
+<div class="row">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= render "layouts/error_message", resource: resource %>
+      <table>
+        <tbody>
+          <tr>
+            <th>名前</th>
+            <td class="sign-up-small-cell"></td>
+            <td><%= f.text_field :name, autofocus: true, class: "form-control" %></td>
+          </tr>
+          <tr>
+            <th>ニックネーム</th>
+            <td class="sign-up-small-cell"></td>
+            <td><%= f.text_field :nickname, autofocus: true, class: "form-control" %></td>
+          </tr>
+          <tr>
+            <th>メールアドレス</th>
+            <td class="sign-up-small-cell"></td>
+            <td><%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %></td>
+          </tr>
+          <tr>
+            <th>パスワード（６文字以上）</th>
+            <td class="sign-up-small-cell"></td>
+            <td><%= f.password_field :password, class: "form-control" %></td>
+          </tr>
+          <tr>
+            <th>パスワード（確認用）</th>
+            <td class="sign-up-small-cell"></td>
+            <td><%= f.password_field :password_confirmation, autocomplete: "current-password", class: "form-control" %></td>
+          </tr>
+          <tr height="30">
+            <th></th>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th></th>
+            <td class="sign-up-small-cell"></td>
+            <td><div class="customer-sign-up-actions">
+            <%= f.submit "新規登録", class:"btn btn-success col-xs-3 col-xs-offset-5" %>
+      </div></td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <br>
+    <% end %>
+  </div>
+</div>
+<div class="container col-xs-6 col-xs-offset-2 sign-up-message">
+        <h4 style="padding: 10px; margin: 10px;">
+          <span style="background-color: #EEEEEE">　既に登録済みの方　</span>
+        </h4>
+  <div class="row">
+    　　　　　<span class="col-xs-offset-"><%= link_to 'こちら', new_user_session_path %>　からログインしてください。</span>
+  </div>
+</div>

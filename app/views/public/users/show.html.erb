@@ -1,0 +1,26 @@
+  <div class="container">
+  <h2 style="padding: 10px; margin: 10px;" class="font-weight-bold my-5"><span style="background-color: #EEEEEE">　マイページ　</span></h2>
+  <div class="row">
+      <div class="d-flex align-items-center">
+        <p class="mr-5 font-weight-bold">登録情報</p>
+        <p><%= link_to "編集する",edit_users_path, class:"btn btn-success ml-1"%></p>
+      </div>
+     <table class="table">
+  <tbody>
+    <tr>
+      <td class="col-md-2" style="background-color: #EEEEEE">名前</td>
+      <td class="col-md-7"><%= @user.name %></td>
+    </tr>
+    <tr>
+      <td class="col-md-2" style="background-color: #EEEEEE">ニックネーム</td>
+      <td class="col-md-7"><%= @user.nickname %></td>
+    </tr>
+    <tr>
+      <td class="col-md-2" style="background-color: #EEEEEE">メールアドレス</td>
+      <td class="col-md-7"><%= @user.email%></td>
+    </tr>
+  </tbody>
+</table>
+
+  </div>
+</div>
