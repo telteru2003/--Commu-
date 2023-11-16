@@ -2,10 +2,10 @@ class User < ApplicationRecord
   has_one_attached :profile_image
   # before_create :generate_remember_token
 
-  devise :database_authenticatable, :registerable,
+  devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  # belongs_to :family
+  belongs_to :family
   has_many :foods, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy

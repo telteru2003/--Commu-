@@ -1,18 +1,18 @@
 class Public::SessionsController < Devise::SessionsController
 
-  # def create
-  #   self.resource = warden.authenticate!(auth_options)
-  #   set_flash_message!(:notice, :signed_in)
-  #   sign_in(resource_name, resource)
-  #   yield resource if block_given?
-  #   respond_with resource, location: after_sign_in_path_for(resource)
+  def create
+    self.resource = warden.authenticate!(auth_options)
+    set_flash_message!(:notice, :signed_in)
+    sign_in(resource_name, resource)
+    yield resource if block_given?
+    respond_with resource, location: after_sign_in_path_for(resource)
 
-  #   if resource
-  #     resource.generate_and_save_remember_token
-  #   else
-  #     redirect_to root_path
-  #   end
-  # end
+    if resource
+      resource.generate_and_save_remember_token
+    else
+      redirect_to root_path
+    end
+  end
 
   # ゲストログイン
   def guest_sign_in
@@ -26,6 +26,7 @@ class Public::SessionsController < Devise::SessionsController
 
   def after_sign_in_path_for(resource)
     flash[:notice] = "ログインしました"
+    puts "User #{resource.email} signed in at #{Time.now}"
     foods_path
   end
 

@@ -30,8 +30,19 @@ Rails.application.routes.draw do
 
   scope module: :public do
     resources :foods, only: [:index, :new, :create]
-    resources :users,only: [:show, :update, :destroy] do
 
+    # resources :families, only: [:show, :edit, :update] do
+    #   get 'show', on: :member
+    #   get 'edit', on: :member
+    #   patch 'update/families', on: :member
+    # end
+
+    resources :families
+      get 'show/families/:id', to: 'families#show', as: 'show_family'
+      get 'edit/families' => 'families#edit'
+      patch 'update/families' => 'families#update', as: :update_families
+
+    resources :users, only: [:index, :show, :update, :destroy] do
       member do
         delete 'destroy', to: 'users#destroy'
       end
@@ -43,7 +54,6 @@ Rails.application.routes.draw do
     end
 
       get 'show/users/:id', to: 'users#show', as: 'show_user'
-
       get 'edit/users' => 'users#edit'
       patch 'update/users' => 'users#update', as: :update_users
 

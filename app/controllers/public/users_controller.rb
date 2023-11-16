@@ -1,8 +1,12 @@
 class Public::UsersController < ApplicationController
 
+  def index
+    @users = User.all
+  end
+
   def show
     if current_user.email == 'guest@example.com'
-      redirect_to root_path, alert: 'ゲストユーザーはこのページにアクセスできません。'
+      redirect_to root_path, alert: 'ゲストユーザーはこのページにアクセスできません'
     else
       @user = User.find(params[:id])
     end
@@ -12,18 +16,18 @@ class Public::UsersController < ApplicationController
     @user = current_user
   end
 
-def update
-  @user = current_user
-  @user.family ||= Family.create(name: 'Default Family')
+  def update
+    @user = current_user
+    @user.family ||= Family.create(name: 'Default Family')
 
-  if @user.update(user_params)
-    flash[:notice] = "ユーザー情報を更新しました。"
-    redirect_to show_user_path(@user)
-  else
-    flash[:notice] = "エラーによりユーザー情報を更新できません。"
-    render :edit
+    if @user.update(user_params)
+      flash[:notice] = "ユーザー情報を更新しました"
+      redirect_to show_user_path(@user)
+    else
+      flash[:notice] = "エラーによりユーザー情報を更新できません"
+      render :edit
+    end
   end
-end
 
   def quit
     @user = current_user
@@ -59,6 +63,6 @@ end
   private
 
   def user_params
-    params.require(:user).permit(:name, :nickname, :email, :profile_image)
+    params.require(:user).permit(:name, :nickname, :email, :profile_image, :family_id)
   end
 end

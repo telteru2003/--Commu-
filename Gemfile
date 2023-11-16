@@ -60,3 +60,5 @@ gem 'kaminari','~> 1.2.1'
 gem 'devise'
 
 gem 'image_processing', '~> 1.2'
+
+gem 'devise_invitable'
