@@ -9,7 +9,8 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     sessions: 'public/sessions',
     passwords: 'public/passwords',
-    registrations: 'public/registrations'
+    registrations: 'public/registrations',
+    invitations: 'devise/invitations'
   }
 
 # 【ユーザー】 ゲストログイン
@@ -20,8 +21,6 @@ Rails.application.routes.draw do
 
 # ルート設定
   root 'public/homes#top'
-  # resources :users
-  # resources :foods
 
 # 【ユーザー】 ログイン後のリダイレクト先
   authenticated :user do
@@ -29,18 +28,16 @@ Rails.application.routes.draw do
   end
 
   scope module: :public do
+    resources :invitations, only: [:new, :edit]
     resources :foods, only: [:index, :new, :create]
+    resources :families, only: [:edit, :show, :update, :destroy] do
+      member do
+        get 'show/:id', to: 'families#show', as: 'show_family'
+        get 'edit' => 'families#edit'
+        patch 'update' => 'families#update', as: :update_families
+      end
+    end
 
-    # resources :families, only: [:show, :edit, :update] do
-    #   get 'show', on: :member
-    #   get 'edit', on: :member
-    #   patch 'update/families', on: :member
-    # end
-
-    resources :families
-      get 'show/families/:id', to: 'families#show', as: 'show_family'
-      get 'edit/families' => 'families#edit'
-      patch 'update/families' => 'families#update', as: :update_families
 
     resources :users, only: [:index, :show, :update, :destroy] do
       member do

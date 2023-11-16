@@ -1,0 +1,9 @@
+<h2>ユーザーを招待する</h2>
+
+<%= form_for(resource, as: resource_name, url: invitation_path(resource_name)) do |f| %>
+  <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+
+  <%= f.submit "招待を送信する" %>
+<% end %>
+
+<%= render "devise/shared/links" %>

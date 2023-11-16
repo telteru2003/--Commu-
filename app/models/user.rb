@@ -34,13 +34,17 @@ class User < ApplicationRecord
     update(is_active: false)
   end
 
-  def get_profile_image
-    unless profile_image.attached?  # 修正
-      file_path = Rails.root.join('app/assets/images/default-image.jpg')
-      profile_image.attach(io: File.open(file_path), filename: 'default-image.jpg', content_type: 'image/jpeg')
-    end
+def get_profile_image
+  if profile_image.attached?
+    profile_image.variant(resize_to_limit: [100, 100]).processed
+  else
+    default_image_path = Rails.root.join('app/assets/images/default-image.jpg')
+    default_image = File.open(default_image_path)
+    profile_image.attach(io: default_image, filename: 'default-image.jpg', content_type: 'image/jpeg')
+    default_image.close
     profile_image.variant(resize_to_limit: [100, 100]).processed
   end
+end
 
   # protected
 
