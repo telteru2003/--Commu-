@@ -29,19 +29,25 @@ Rails.application.routes.draw do
   end
 
   scope module: :public do
-    resources :foods,only: [:index, :show]
-    resources :users,only: [:show, :destroy] do
+    resources :foods, only: [:index, :new, :create]
+    resources :users,only: [:show, :update, :destroy] do
+
       member do
         delete 'destroy', to: 'users#destroy'
       end
+
+      # collection do
+      #   get 'search_family'
+      # end
+
     end
 
-    get 'show/users/:id', to: 'users#show', as: 'show_user'
+      get 'show/users/:id', to: 'users#show', as: 'show_user'
 
-    get 'edit/users' => 'users#edit'
-    patch 'update/users' => 'users#update'
+      get 'edit/users' => 'users#edit'
+      patch 'update/users' => 'users#update', as: :update_users
 
-    get 'quit/users', to: 'users#quit'
-    patch 'out', to: 'users#out'
+      get 'quit/users', to: 'users#quit'
+      patch 'out', to: 'users#out'
     end
   end

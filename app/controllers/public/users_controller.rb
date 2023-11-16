@@ -1,21 +1,29 @@
 class Public::UsersController < ApplicationController
 
   def show
-    @user = current_user
+    if current_user.email == 'guest@example.com'
+      redirect_to root_path, alert: 'ゲストユーザーはこのページにアクセスできません。'
+    else
+      @user = User.find(params[:id])
+    end
   end
 
   def edit
     @user = current_user
   end
 
-  def update
-    @user = current_user
-    if @user.update(user_params)
-      redirect_to root_path
-    else
-      render :edit
-    end
+def update
+  @user = current_user
+  @user.family ||= Family.create(name: 'Default Family')
+
+  if @user.update(user_params)
+    flash[:notice] = "ユーザー情報を更新しました。"
+    redirect_to show_user_path(@user)
+  else
+    flash[:notice] = "エラーによりユーザー情報を更新できません。"
+    render :edit
   end
+end
 
   def quit
     @user = current_user
@@ -23,19 +31,17 @@ class Public::UsersController < ApplicationController
 
   def destroy
     @user = current_user
-    @user.destroy!
     if @user.email == 'guest@example.com'
-      # ゲストユーザーは退会させず、プロフィールを初期化
       @user.name = 'ゲストユーザー'
       @user.is_active = true
       @user.nickname = 'ゲスト'
       @user.image_id = nil
+      @user.save
     else
-      # 一般ユーザーは退会させる
-      @user = User.find(params[:id])
-      @user.update(is_active: false)
+      sign_out(@user)
+      @user.destroy!
     end
-    reset_session
+
     flash[:notice] = 'ありがとうございました。またのご利用を心よりお待ちしております。'
     redirect_to root_path
   end
@@ -44,9 +50,15 @@ class Public::UsersController < ApplicationController
     super && (is_valid == true)
   end
 
+  def search_family
+    search_term = params[:family_search]
+    families = Family.where("name LIKE ? OR id = ?", "%#{search_term}%", search_term.to_i)
+    render json: families
+  end
+
   private
 
   def user_params
-    params.require(:user).permit(:name, :nickname, :email)
+    params.require(:user).permit(:name, :nickname, :email, :profile_image)
   end
 end

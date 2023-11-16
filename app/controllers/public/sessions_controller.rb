@@ -1,27 +1,36 @@
 class Public::SessionsController < Devise::SessionsController
 
-  def create
-    super do |resource|
-      resource.generate_remember_token # ログイン時にremember_tokenを生成
-    end
-  end
+  # def create
+  #   self.resource = warden.authenticate!(auth_options)
+  #   set_flash_message!(:notice, :signed_in)
+  #   sign_in(resource_name, resource)
+  #   yield resource if block_given?
+  #   respond_with resource, location: after_sign_in_path_for(resource)
+
+  #   if resource
+  #     resource.generate_and_save_remember_token
+  #   else
+  #     redirect_to root_path
+  #   end
+  # end
 
   # ゲストログイン
   def guest_sign_in
     user = User.guest_login
     sign_in user
-    flash[:notice__upper] = 'ゲストユーザーとしてログインしました'
-    redirect_to show_user_path(id: user.id)
+    flash[:notice] = 'ゲストユーザーとしてログインしました'
+    redirect_to foods_path
   end
 
   protected
 
   def after_sign_in_path_for(resource)
+    flash[:notice] = "ログインしました"
     foods_path
   end
 
   def after_sign_out_path_for(resource)
-    flash[:notice] = "ログアウトしました"  # flashメッセージの追加もできます
+    flash[:notice] = "ログアウトしました"
     root_path
   end
 

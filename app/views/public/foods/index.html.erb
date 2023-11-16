@@ -1,1 +1,25 @@
-index
+<!-- app/views/public/foods/index.html.erb -->
+
+<div class="container mt-5">
+  <h1>食品一覧</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">画像</th>
+        <th scope="col">食品名</th>
+        <th scope="col">賞味期限</th>
+        <!-- 他の項目を追加 -->
+      </tr>
+    </thead>
+    <tbody>
+      <% @foods.each do |food| %>
+        <tr>
+          <td><%= image_tag food.get_foods_image %></td>
+          <td><%= food.name %></td>
+          <td><%= food.expiration_date.strftime("%Y年%m月%d日") %></td>
+          <!-- 他の項目を追加 -->
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
