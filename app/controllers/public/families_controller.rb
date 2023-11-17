@@ -1,6 +1,6 @@
 class Public::FamiliesController < ApplicationController
   before_action :authenticate_user!
-  before_action :ensure_correct_user, only: [:edit, :update]
+  before_action :ensure_correct_user, only: [:edit, :update, :destroy, :memberships]
 
   def new
     @user = current_user
@@ -34,6 +34,11 @@ class Public::FamiliesController < ApplicationController
     @user = current_user
   end
 
+  def invite
+    @family = Family.find(params[:id])
+    @user = current_user
+  end
+
   def update
     @family = Family.find(params[:id])
     @user = current_user
@@ -47,6 +52,11 @@ class Public::FamiliesController < ApplicationController
     end
   end
 
+  def memberships
+    @family = Family.find(params[:id])
+    @memberships = @family.permits.page(params[:page])
+  end
+
   private
 
   def family_params
@@ -58,7 +68,7 @@ class Public::FamiliesController < ApplicationController
   def ensure_correct_user
     @family = Family.find(params[:id])
     unless @family.owner_id == current_user.id
-      redirect_to families_path
+      redirect_to families_path(@family), alert: "グループオーナーのみ編集が可能です"
     end
   end
 end

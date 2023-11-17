@@ -1,0 +1,25 @@
+
+<% if @family.family_users.exists?(user_id: current_user.id) %>
+　<%= link_to 'グループ退出', family_family_users_path(@family), method: :delete, class: "btn btn-sm btn-danger", data: { confirm: "本当にグループを退出しますか？" } %>
+<% elsif @family.memberships.exists?(user_id: current_user.id) %>
+　<%= link_to '申請取消', family_memberships_path(@family), method: :delete, class: "btn btn-sm btn-danger" %>
+<% else %>
+  <%= link_to '加入申請', family_memberships_path(@family), method: :post, class: "btn btn-sm btn-success" %>
+<% end %>
+
+
+<% if @family.owner_id == current_user.id %>
+    <div class="dropdown">
+    <button class="btn btn-sm btn-secondary dropdown-toggle"
+            type="button" id="dropdownMenu1" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+      オーナー専用
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+      <%= link_to "承認待ち一覧", memberships_path(@family),  class: "dropdown-item text-secondary bg-transparent" %>  ⇦編集箇所
+      <%= link_to 'グループ編集', edit_family_path(@family),  class: "dropdown-item text-success bg-transparent" %>
+      <%= link_to 'グループ削除', family_path(@family), method: :delete,  class: "dropdown-item text-danger bg-transparent", data: { confirm: "本当に削除しますか？" } %>
+    </div>
+  </div>
+<% end %>
+
