@@ -16,9 +16,9 @@
       オーナー専用
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-      <%= link_to "承認待ち一覧", memberships_path(@family),  class: "dropdown-item text-secondary bg-transparent" %>  ⇦編集箇所
+      <%= link_to "承認待ち一覧", permit_family_path(@family),  class: "dropdown-item text-secondary bg-transparent" %>
       <%= link_to 'グループ編集', edit_family_path(@family),  class: "dropdown-item text-success bg-transparent" %>
-      <%= link_to 'グループ削除', family_path(@family), method: :delete,  class: "dropdown-item text-danger bg-transparent", data: { confirm: "本当に削除しますか？" } %>
+      <%= link_to 'グループ削除', family_path(@family), method: :delete,  class: "dropdown-item text-danger bg-transparent", data: { confirm: "グループ削除します。 よろしいですか？" } %>
     </div>
   </div>
 <% end %>

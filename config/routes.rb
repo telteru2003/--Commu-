@@ -30,13 +30,15 @@ Rails.application.routes.draw do
   scope module: :public do
     resources :invitations, only: [:new, :edit]
     resources :foods, only: [:index, :new, :create]
-    resources :families, only: [:new, :edit, :show, :invite, :create, :update], except: [:destroy] do
+    resources :families, only: [:new, :edit, :show, :invite, :permit, :create, :update, :destroy] do
       member do
         get 'show/:id', to: 'families#show', as: 'show_family'
         get 'new' => 'families#new', as: 'new_family'
         get 'invite' => 'families#invite'
+        get 'permit' => 'families#permit'
         get 'edit' => 'families#edit'
         patch 'update' => 'families#update', as: :update_families
+        delete 'destroy', to: 'families#destroy', as: :delete_families
       end
 
       resource :memberships, only: [:create, :destroy]

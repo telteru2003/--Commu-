@@ -1,6 +1,7 @@
 class Public::FamiliesController < ApplicationController
   before_action :authenticate_user!
   before_action :ensure_correct_user, only: [:edit, :update, :destroy, :memberships]
+  before_action :set_family, only: [:show, :edit, :invite, :update, :memberships, :destroy]
 
   def new
     @user = current_user
@@ -54,10 +55,26 @@ class Public::FamiliesController < ApplicationController
 
   def memberships
     @family = Family.find(params[:id])
-    @memberships = @family.permits.page(params[:page])
+    @memberships = @family.memberships.page(params[:page])
+  end
+
+  def permit
+    @family = Family.find(params[:id])
+    @memberships = @family.memberships.page(params[:page])
+  end
+
+  def destroy
+    @user = current_user
+    @family.destroy!
+    flash[:notice] = 'グループを削除しました'
+    redirect_to show_user_path(@user)
   end
 
   private
+
+  def set_family
+    @family = Family.find(params[:id])
+  end
 
   def family_params
     params.require(:family).permit(:name)

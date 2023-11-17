@@ -1,0 +1,49 @@
+<div class="container">
+  <h2 class="text-center"><%= @family.name %></h2>
+  <h4 class="text-center">承認待ち一覧</h4>
+
+  <div class="row mt-5">
+    <div class="col-11 col-md-12 mx-auto">
+    <% if @memberships.present? %>
+      <div class="table-responsive">
+        <table class="table table-hover text-nowrap bg-light">
+          <thead class="thead-dark">
+            <tr>
+              <th>名前</th>
+              <th>部署</th>
+              <th>役職</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @memberships.each do |membership| %>
+              <tr>
+                <td><%= link_to membership.user.name, public_user_path(membership.user.id), class: "text-dark" %></td>
+                <td>
+                  <% if membership.user.department_id.present? %>
+                    <%= membership.user.department.name %>
+                  <% end %>
+                </td>
+                <td><%= membership.user.position %></td>
+                <td class="text-right">
+                  <%= link_to '加入許可', family_family_users_path(@family, membership_id: membership.id), method: :post, class: "btn btn-sm btn-success" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% else %>
+      <P class="text-center">承認待ちユーザーはいません。</P>
+    <% end %>
+    </div>
+    <div class="mx-auto mt-5"><%= paginate @memberships %></div>
+  </div>
+
+  <div class="row mt-5">
+    <div class="col-md-9 mx-auto">
+    <p class="text-center"><%= link_to "戻る", family_path(@family), class: 'text-dark font-weight-bold' %></p>
+    </div>
+  </div>
+
+</div>

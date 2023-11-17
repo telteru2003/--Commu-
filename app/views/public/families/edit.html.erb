@@ -12,9 +12,10 @@
 
       <div>
       　<%= f.submit "　編集内容を保存　",class:"btn btn-success mr-5" %>
-      </div>
       <% end %>
+      <%= link_to 'グループ削除', family_path(@family), method: :delete, class: "btn btn-danger", data: { confirm: "グループ削除します。 よろしいですか？" } %>
       </div>
+
     </div>
   </div>
 </div>
