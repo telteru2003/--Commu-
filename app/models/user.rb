@@ -5,10 +5,12 @@ class User < ApplicationRecord
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  belongs_to :family
-  has_many :foods, dependent: :destroy
-  has_many :comments, dependent: :destroy
-  has_many :likes, dependent: :destroy
+  belongs_to :family,     optional: true
+  has_many :family_users, dependent: :destroy
+  has_many :memberships,  dependent: :destroy
+  has_many :foods,        dependent: :destroy
+  has_many :comments,     dependent: :destroy
+  has_many :likes,        dependent: :destroy
 
   # validates :email, presence: true
 

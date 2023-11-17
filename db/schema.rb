@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_11_16_121010) do
+ActiveRecord::Schema.define(version: 2023_11_17_020232) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -61,9 +61,19 @@ ActiveRecord::Schema.define(version: 2023_11_16_121010) do
   end
 
   create_table "families", force: :cascade do |t|
-    t.string "name", null: false
+    t.string "name"
+    t.integer "owner_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "family_users", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "family_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["family_id"], name: "index_family_users_on_family_id"
+    t.index ["user_id"], name: "index_family_users_on_user_id"
   end
 
   create_table "foods", force: :cascade do |t|
@@ -97,6 +107,15 @@ ActiveRecord::Schema.define(version: 2023_11_16_121010) do
     t.integer "food_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "memberships", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "family_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["family_id"], name: "index_memberships_on_family_id"
+    t.index ["user_id"], name: "index_memberships_on_user_id"
   end
 
   create_table "places", force: :cascade do |t|
@@ -136,4 +155,8 @@ ActiveRecord::Schema.define(version: 2023_11_16_121010) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "family_users", "families"
+  add_foreign_key "family_users", "users"
+  add_foreign_key "memberships", "families"
+  add_foreign_key "memberships", "users"
 end

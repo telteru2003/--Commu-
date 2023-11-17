@@ -7,11 +7,11 @@ class Public::SessionsController < Devise::SessionsController
     yield resource if block_given?
     respond_with resource, location: after_sign_in_path_for(resource)
 
-    if resource
-      resource.generate_and_save_remember_token
-    else
-      redirect_to root_path
-    end
+    # if resource
+    #   resource.generate_and_save_remember_token
+    # else
+    #   redirect_to root_path
+    # end
   end
 
   # ゲストログイン

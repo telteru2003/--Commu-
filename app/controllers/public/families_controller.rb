@@ -1,8 +1,26 @@
 class Public::FamiliesController < ApplicationController
+  before_action :authenticate_user!
+  before_action :ensure_correct_user, only: [:edit, :update]
 
   def new
     @user = current_user
     @family = Family.new
+  end
+
+  def create
+    @family = Family.new(family_params)
+    @family.owner_id = current_user.id
+    @user = current_user
+
+    if @family.save
+      @user.family = @family
+      @user.save
+      flash[:notice] = "グループを作成しました"
+      redirect_to show_user_path(@user)
+    else
+      flash[:notice] = "エラーによりグループを作成できません"
+      render 'new'
+    end
   end
 
   def show
@@ -29,25 +47,18 @@ class Public::FamiliesController < ApplicationController
     end
   end
 
-  def create
-    @family = Family.new(family_params)
-    @user = current_user
-
-    if @family.save
-      @user.family = @family
-      @user.save
-      flash[:notice] = "グループを作成しました"
-      redirect_to show_user_path(@user)
-    else
-      flash[:notice] = "エラーによりグループを作成できません"
-      render 'new'
-    end
-  end
-
   private
 
   def family_params
     params.require(:family).permit(:name)
   end
 
+  # params[:id]を持つ@familyのowner_idカラムのデータと自分のユーザーIDが一緒かどうかを確かめる。
+  # 違う場合、処理をする。グループ一覧ページへ遷移させる。before_actionで使用する。
+  def ensure_correct_user
+    @family = Family.find(params[:id])
+    unless @family.owner_id == current_user.id
+      redirect_to families_path
+    end
+  end
 end

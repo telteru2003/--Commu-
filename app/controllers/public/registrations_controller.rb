@@ -8,22 +8,30 @@ class Public::RegistrationsController < Devise::RegistrationsController
     build_resource(sign_up_params.except(:family))
     family_name = sign_up_params[:family]
 
-    # ファミリーを新規作成
-    @family = Family.create(name: family_name)
+  # ファミリーを新規作成（所属グループが指定されている場合のみ）
+      if family_name.present?
+        @family = Family.create(name: family_name)
 
-    # ファミリーをユーザーに関連付ける
-    resource.family = @family
+        # ファミリーをユーザーに関連付ける
+        resource.family = @family
+      end
 
     if resource.save
       # 保存成功時の処理
       set_flash_message! :notice, :signed_up
       sign_up(resource_name, resource)
-      respond_with resource, location: after_sign_up_path_for(resource)
+
+      respond_to do |format|
+        format.html { redirect_to after_sign_up_path_for(resource) }
+      end
     else
       # 保存失敗時の処理
       logger.error(resource.errors.full_messages) # エラーメッセージをログに出力
       set_flash_message! :error, resource.errors.full_messages.join(', ')
-      respond_with resource, location: after_inactive_sign_up_path_for(resource)
+
+      respond_to do |format|
+        format.html { render :new }
+      end
     end
   end
 
