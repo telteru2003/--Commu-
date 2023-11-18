@@ -1,9 +1,27 @@
-<div class="container mt-5">
-  <% if @user.family.present? %>
-    <%= render 'list' %>
-  <% elsif @user.family_users.first.present? %>
-    <%= render 'list' %>
-  <% else %>
-    <%= render 'list' %>
-  <% end %>
-</div>
+
+  <h1>食品類一覧</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">画像</th>
+        <th scope="col">食品名</th>
+        <th scope="col">賞味 / 消費期限</th>
+        <th scope="col">投稿者</th>
+        <th scope="col">保管場所</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <% @foods.each do |food| %>
+        <%# if @user.present? && food.user.present? && @user.family.present? && food.user.family.present? && @user.family.id == food.user.family.id %> <!-- 同じfamily_idのユーザーのみ閲覧可能 -->
+        <tr>
+          <td><%= image_tag food.get_foods_image %></td>
+          <td><%= food.name %></td>
+          <td><%= food.expiration_date.strftime("%Y年%m月%d日") %></td>
+          <td><%= food.user.nickname %></td>
+          <td></td>
+        </tr>
+        <%# end %>
+      <% end %>
+    </tbody>
+  </table>

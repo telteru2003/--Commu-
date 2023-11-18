@@ -2,7 +2,21 @@ class Public::FoodsController < ApplicationController
   before_action :set_user
 
   def index
-    @foods = Food.all
+    if current_user.family.present?
+      family = current_user.family
+      users = family.users.pluck(:id)
+      owner = family.owner.id
+      users.push(owner)
+      @foods = Food.where(user_id: users)
+    elsif current_user.family_users.first.present?
+      family = current_user.family_users.first.family
+      users = family.users.pluck(:id)
+      owner = family.owner.id
+      users.push(owner)
+      @foods = Food.where(user_id: users)
+    else
+      @foods = current_user.foods
+    end
   end
 
   def new
