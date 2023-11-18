@@ -19,28 +19,29 @@
   <% end %>
 </div>
 
+<div class="row">
+  <div class="container mt-5">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">画像</th>
+          <th scope="col">メンバー名</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= image_tag @owner.get_profile_image, size:"25x25" %></td>
+          <td><%= @owner.nickname %></td>
+        </tr>
 
-  <div class="row">
-    <div class="container mt-5">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">画像</th>
-            <th scope="col">メンバー名</th>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= image_tag user.get_profile_image, size:"25x25" %></td>
+          <td><%= user.nickname %></td>
+        </tr>
+      <% end %>
 
-          </tr>
-        </thead>
-        <tbody>
-          <% @users.each do |user| %>
-            <tr>
-              <td><%= image_tag user.get_profile_image, size:"25x25" %></td>
-              <td><%= user.nickname %></td>
-
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-
+      </tbody>
+    </table>
   </div>
 </div>

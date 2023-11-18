@@ -21,8 +21,8 @@
                 <td><%= image_tag membership.user.get_profile_image, size:"25x25" %></td>
                 <td><%= membership.user.name %></td>
                 <td class="text-right">
-                  <%= link_to '加入許可', family_family_users_path(@family, membership_id: membership.id), method: :post, class: "btn btn-sm btn-success" %>
-                  <%= link_to '拒否', family_family_users_path(@family, membership_id: membership.id), method: :delete, class: "btn btn-sm btn-danger" %>
+                  <%= link_to '加入承認', family_family_users_path(membership.family, user_id: membership.user_id, membership_id: membership.id), method: :post, class: "btn btn-sm btn-success" %>
+                  <%= link_to '拒否', family_memberships_path(membership.family, membership), method: :delete, class: "btn btn-sm btn-danger" %>
                 </td>
               </tr>
             <% end %>

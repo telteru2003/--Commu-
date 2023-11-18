@@ -25,6 +25,7 @@ class Public::FamiliesController < ApplicationController
 
   def show
     @users = @family.users
+    @owner = @family.owner
   end
 
   def edit
@@ -51,7 +52,7 @@ class Public::FamiliesController < ApplicationController
   def destroy
     @family.destroy!
     flash[:notice] = 'グループを削除しました'
-    redirect_to show_user_path(@user)
+    redirect_to user_path(@user)
   end
 
   private

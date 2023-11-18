@@ -42,8 +42,8 @@ Rails.application.routes.draw do
         delete 'destroy', to: 'families#destroy', as: :delete_families
       end
 
-      resource :memberships, only: [:create, :destroy]
-      resource :family_users, only: [:create, :destroy]
+      resource :memberships, only: %i[index create destroy]
+      resource :family_users, only: %i[index create destroy]
     end
 
     get "families/:id/memberships" => "families#memberships", as: :memberships
