@@ -14,10 +14,10 @@ class Public::FamilyUsersController < ApplicationController
   end
 
   def destroy
-    @family_user = FamilyUser.find(params[:id])
+    @family_user = FamilyUser.find_by(family_id: params[:family_id], user_id: params[:user_id])
     @family_user.destroy!
     @comminity = Family.find(params[:family_id])
-    redirect_to show_user_path(current_user), notice: "グループ「#{@family.name}」を退会しました。"
+    redirect_to show_user_path(current_user), notice: "グループ「#{@comminity.name}」を退会しました。"
 
     # @family = Family.find(params[:family_id])
     # @membership = Membership.find(params[:membership_id])

@@ -9,9 +9,11 @@
       <p><%= link_to "編集する", edit_users_path, class:"btn btn-success ml-1"%></p>
       <% if @user.family.present? %>
         <p><%= link_to "グループ詳細", family_path(@user.family), class: "btn btn-info ml-1" %></p>
+      <% elsif @user.family_users.first.present? %>
+        <p><%= link_to "グループ詳細", family_path(@user.family_users.first.family), class: "btn btn-info ml-1" %></p>
       <% else %>
         <p><%= link_to "グループ作成", new_family_path, class: "btn btn-primary ml-1" %></p>
-      <%= render "layouts/familysearch" %>
+        <%= render "layouts/familysearch" %>
       <% end %>
     </div>
 
@@ -22,6 +24,8 @@
           <td class="col-md-7">
             <% if @user.family.present? %>
               <%= @user.family.name %>
+            <% elsif @user.family_users.first.present? %>
+              <%= @user.family_users.first.family.name %>
             <% else %>
               所属しているグループはありません
             <% end %>

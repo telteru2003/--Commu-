@@ -2,14 +2,17 @@ class Public::MembershipsController < ApplicationController
 
   def create
     @family = Family.find(params[:family_id])
-    membership = current_user.memberships.new(family_id: params[:family_id])
+    membership = User.find(params[:user_id]).memberships.new(family_id: params[:family_id])
     membership.save
     redirect_to request.referer, notice: "グループへ参加申請をしました"
   end
 
   def destroy
     @family = Family.find(params[:family_id])
-    membership = current_user.memberships.find_by(family_id: params[:family_id])
+    # membership = current_user.memberships.find_by(family_id: params[:family_id])
+    membership = User.find(params[:user_id]).memberships.find_by(family_id: params[:family_id])
+
+
     if membership
       membership.destroy
       redirect_to request.referer, alert: "グループへの参加申請を取消しました"
@@ -24,10 +27,10 @@ class Public::MembershipsController < ApplicationController
     # redirect_to family_url(@family), notice: "加入申請を取り消しました"
   end
 
-  private
+  # private
 
-  def membership_params
-    params.permit(:family_id)
-  end
+  # def membership_params
+  #   params.permit(:family_id)
+  # end
 
 end

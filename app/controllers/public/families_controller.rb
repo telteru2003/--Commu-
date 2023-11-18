@@ -74,7 +74,7 @@ class Public::FamiliesController < ApplicationController
   def ensure_correct_user
     @family = Family.find(params[:id])
     unless @family.owner_id == current_user.id
-      redirect_to families_path(@family), alert: "グループオーナーのみ編集が可能です"
+      redirect_to show_user_path(current_user.id), alert: "グループオーナーのみ編集が可能です"
     end
   end
 end
