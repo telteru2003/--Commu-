@@ -20,13 +20,6 @@
             <td><%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %></td>
           </tr>
           <tr>
-            <th>所属グループ</th>
-            <td class="sign-up-small-cell"></td>
-            <td>
-              <%= f.text_field :family, class: "form-control", placeholder: '新しいグループ名' %>
-            </td>
-          </tr>
-          <tr>
             <th>パスワード（６文字以上）</th>
             <td class="sign-up-small-cell"></td>
             <td><%= f.password_field :password, class: "form-control" %></td>

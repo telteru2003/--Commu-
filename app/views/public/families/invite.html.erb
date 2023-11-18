@@ -6,20 +6,3 @@
 <% else %>
   <%= link_to '加入申請', family_memberships_path(@family), method: :post, class: "btn btn-sm btn-success" %>
 <% end %>
-
-
-<% if @family.owner_id == current_user.id %>
-    <div class="dropdown">
-    <button class="btn btn-sm btn-secondary dropdown-toggle"
-            type="button" id="dropdownMenu1" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-      オーナー専用
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-      <%= link_to "承認待ち一覧", permit_family_path(@family),  class: "dropdown-item text-secondary bg-transparent" %>
-      <%= link_to 'グループ編集', edit_family_path(@family),  class: "dropdown-item text-success bg-transparent" %>
-      <%= link_to 'グループ削除', family_path(@family), method: :delete,  class: "dropdown-item text-danger bg-transparent", data: { confirm: "グループ削除します。 よろしいですか？" } %>
-    </div>
-  </div>
-<% end %>
-

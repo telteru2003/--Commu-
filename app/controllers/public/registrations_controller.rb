@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Public::RegistrationsController < Devise::RegistrationsController
+  before_action :authenticate_user!
   before_action :ensure_normal_user, only: %i[update destroy]
 
   # POST /resource
@@ -9,12 +10,12 @@ class Public::RegistrationsController < Devise::RegistrationsController
     family_name = sign_up_params[:family]
 
   # ファミリーを新規作成（所属グループが指定されている場合のみ）
-      if family_name.present?
-        @family = Family.create(name: family_name)
+      # if family_name.present?
+      #   @family = Family.create(name: family_name)
 
         # ファミリーをユーザーに関連付ける
-        resource.family = @family
-      end
+      #   resource.family = @family
+      # end
 
     if resource.save
       # 保存成功時の処理

@@ -18,7 +18,7 @@ class Public::UsersController < ApplicationController
 
   def update
     @user = current_user
-    @user.family ||= Family.create(name: 'Default Family')
+    # @user.family ||= Family.create(name: 'Default Family')
 
     if @user.update(user_params)
       flash[:notice] = "ユーザー情報を更新しました"

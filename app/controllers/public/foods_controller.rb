@@ -1,8 +1,7 @@
 class Public::FoodsController < ApplicationController
-  before_action :set_user, only: [:new, :create]
+  before_action :set_user
 
   def index
-    @user = current_user
     @foods = Food.all
   end
 

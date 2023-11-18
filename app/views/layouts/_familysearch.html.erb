@@ -1,0 +1,7 @@
+
+      <%= form_with url: search_path, method: :get, local: true, class: "d-flex align-items-center ml-2" do |f| %>
+        <%= f.text_field :content, placeholder: "グループ検索", class: "form-control" %>
+        <%= button_tag type: "submit", class: "btn btn-outline-secondary ms-2" do %>
+          <i class="fa-solid fa-magnifying-glass"></i>
+        <% end %>
+      <% end %>

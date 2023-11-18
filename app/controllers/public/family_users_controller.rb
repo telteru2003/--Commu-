@@ -9,4 +9,15 @@ class Public::FamilyUsersController < ApplicationController
     redirect_to request.referer
   end
 
+  def destroy
+    @family = Family.find(params[:family_id])
+    @membership = Membership.find(params[:membership_id])
+    @family_user = FamilyUser.find_by(user_id: @membership.user_id, family_id: params[:family_id])
+
+    if @family_user
+      @family_user.destroy
+    end
+
+    redirect_to request.referer
+  end
 end

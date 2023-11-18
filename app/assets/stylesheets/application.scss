@@ -81,3 +81,10 @@ footer{
 .dropdown-menu:hover {
   display: block;
 }
+
+.middle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* 画面の高さいっぱいに設定する場合 */
+}
