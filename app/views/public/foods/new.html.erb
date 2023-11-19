@@ -25,8 +25,9 @@
     </div>
 
     <div class="mb-3">
-      <%= form.label :"保管場所（任意）", class: 'form-label' %>
-      <%= form.select :place_id, @places.pluck(:name, :id), { include_blank: '選択してください', class: 'form-select' } %>
+      <%= form.label :"保管場所", class: 'form-label' %>
+      <%= form.collection_select :place_id, @places, :id, :name, { include_blank: '選択してください' }, { class: 'form-select' } %>
+
     </div>
 
     <div class="mb-3">

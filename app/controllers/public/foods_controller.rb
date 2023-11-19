@@ -1,24 +1,6 @@
 class Public::FoodsController < ApplicationController
   before_action :set_user
 
-  # def index
-  #   if current_user.family.present?
-  #     family = current_user.family
-  #     users = family.users.pluck(:id)
-  #     owner = family.owner.id
-  #     users.push(owner)
-  #     @foods = Food.where(user_id: users)
-  #   elsif current_user.family_users.first.present?
-  #     family = current_user.family_users.first.family
-  #     users = family.users.pluck(:id)
-  #     owner = family.owner.id
-  #     users.push(owner)
-  #     @foods = Food.where(user_id: users)
-  #   else
-  #     @foods = current_user.foods
-  #   end
-  # end
-
   def index
     family = current_user.family || current_user.family_users.first&.family
     if family.present?
@@ -30,8 +12,14 @@ class Public::FoodsController < ApplicationController
   end
 
   def new
-    @food = @user.foods.new
-    @places = Place.where(family: @user.family) # ユーザーの所属するファミリーに関連する保管場所を取得
+    family = current_user.family || current_user.family_users.first&.family
+    if family.present?
+      user_ids = family.users.pluck(:id) << family.owner.id
+      @places = family.places
+      @food = @user.foods.new
+    else
+      @foods = current_user.foods.includes(:place)
+    end
   end
 
   def create
