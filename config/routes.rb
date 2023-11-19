@@ -31,13 +31,12 @@ Rails.application.routes.draw do
   	get '/search'=>'search#search'
     # resources :invitations, only: [:new, :edit]
     resources :places, only: [:create, :destroy]
-    resources :foods, only: [:index, :new, :edit, :show, :create, :update] do
+    resources :foods, only: [:index, :new, :edit, :show, :create, :update, :destroy] do
       member do
         get 'show/:id', to: 'foods#show', as: 'show_food'
         get 'edit' => 'foods#edit', as: 'edit_food'
       end
     end
-
     resources :family_users, only: [:destroy]
     resources :families, only: [:new, :edit, :show, :permit, :create, :update, :destroy] do
       member do
@@ -48,7 +47,6 @@ Rails.application.routes.draw do
         patch 'update' => 'families#update', as: :update_families
         delete 'destroy', to: 'families#destroy', as: :delete_families
       end
-
       resource :memberships, only: %i[index create destroy]
       resource :family_users, only: %i[index create destroy]
     end
@@ -61,11 +59,10 @@ Rails.application.routes.draw do
       end
     end
 
-      get 'show/users/:id', to: 'users#show', as: 'show_user'
-      get 'edit/users' => 'users#edit'
-      patch 'update/users' => 'users#update', as: :update_users
-
-      get 'quit/users', to: 'users#quit'
-      patch 'out', to: 'users#out'
-    end
+    get 'show/users/:id', to: 'users#show', as: 'show_user'
+    get 'edit/users' => 'users#edit'
+    patch 'update/users' => 'users#update', as: :update_users
+    get 'quit/users', to: 'users#quit'
+    patch 'out', to: 'users#out'
   end
+end

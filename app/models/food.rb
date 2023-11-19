@@ -11,6 +11,18 @@ class Food < ApplicationRecord
   enum consume_status: { 未消費: 0, 消費済み: 1 }
   enum genre: { 食料: 0, 飲料: 1, 調味料: 2, その他: 3 }
 
+  def self.search_for(content,method)
+    return none if content.blank?
+     if method == 'perfect'
+      Food.where(name: content)
+    # elsif method == 'forward'
+    #   Family.where('name LIKE ?', content + '%')
+    # elsif method == 'backword'
+    #   Family.where('name LIKE ?', '%' + content)
+     else
+       Food.where('name LIKE ?', '%' + content + '%')
+     end
+  end
 
   def get_foods_image
     unless image.attached?
