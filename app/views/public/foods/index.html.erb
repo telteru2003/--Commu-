@@ -2,12 +2,13 @@
   <h1>食品類一覧</h1>
   <table class="table">
     <thead>
-      <tr>
+      <tr style="background-color: #EEEEEE">
         <th scope="col">画像</th>
         <th scope="col">食品名</th>
         <th scope="col">賞味 / 消費期限</th>
         <th scope="col">投稿者</th>
         <th scope="col">保管場所</th>
+        <th scope="col"></th>
 
       </tr>
     </thead>
@@ -19,6 +20,10 @@
           <td><%= food.expiration_date.strftime("%Y年%m月%d日") %></td>
           <td><%= food.user.nickname %></td>
           <td><%= food.place&.name %></td>
+          <td>
+            <%= link_to "編集", edit_food_path(food), class:"btn btn-success ml-1"%>
+            <%= link_to "詳細", food_path(food), class:"btn btn-info ml-1"%>
+          </td>
         </tr>
       <% end %>
     </tbody>

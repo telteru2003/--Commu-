@@ -31,7 +31,13 @@ Rails.application.routes.draw do
   	get '/search'=>'search#search'
     # resources :invitations, only: [:new, :edit]
     resources :places, only: [:create, :destroy]
-    resources :foods, only: [:index, :new, :create]
+    resources :foods, only: [:index, :new, :edit, :show, :create, :update] do
+      member do
+        get 'show/:id', to: 'foods#show', as: 'show_food'
+        get 'edit' => 'foods#edit', as: 'edit_food'
+      end
+    end
+
     resources :family_users, only: [:destroy]
     resources :families, only: [:new, :edit, :show, :permit, :create, :update, :destroy] do
       member do

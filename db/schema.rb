@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(version: 2023_11_17_020232) do
 
   create_table "foods", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.integer "genre_id"
+    t.integer "genre", default: 0
     t.integer "place_id"
     t.string "name", null: false
     t.date "expiration_date", null: false

@@ -20,14 +20,13 @@
     </div>
 
     <div class="mb-3">
-      <%= form.label :"ジャンル（任意）", class: 'form-label' %>
-      <%= form.select :genre, Genre.distinct.pluck(:name), { include_blank: '選択してください', class: 'form-select' } %>
+      <%= form.label :"保管場所（任意）", class: 'form-label' %>
+      <%= form.collection_select :place_id, @places, :id, :name, { include_blank: '選択してください' }, { class: 'form-select' } %>
     </div>
 
     <div class="mb-3">
-      <%= form.label :"保管場所", class: 'form-label' %>
-      <%= form.collection_select :place_id, @places, :id, :name, { include_blank: '選択してください' }, { class: 'form-select' } %>
-
+      <%= form.label :"ジャンル（任意）", class: 'form-label' %>
+      <%= form.select :genre, Food.genres.keys, { include_blank: '選択してください' }, class: 'form-select' %>
     </div>
 
     <div class="mb-3">

@@ -25,19 +25,43 @@ class Public::FoodsController < ApplicationController
   def create
     @food = @user.foods.new(food_params)
     if @food.save
-      redirect_to foods_path, notice: '食品が投稿されました。'
+      redirect_to foods_path, notice: '食品類が投稿されました'
     else
       render :new
     end
   end
 
   def show
+    family = current_user.family || current_user.family_users.first&.family
+    if family.present?
+      user_ids = family.users.pluck(:id) << family.owner.id
+      @places = family.places
+      @food = Food.find(params[:id])
+    else
+      @foods = current_user.foods.includes(:place)
+    end
   end
 
   def edit
+    family = current_user.family || current_user.family_users.first&.family
+    if family.present?
+      user_ids = family.users.pluck(:id) << family.owner.id
+      @places = family.places
+      @food = Food.find(params[:id])
+    else
+      @foods = current_user.foods.includes(:place)
+    end
   end
 
   def update
+    @food = Food.find(params[:id])
+      if @food && @food.update(food_params) # @foodがnilでないことを確認し、updateが成功したかどうかを確認
+        flash[:notice] = "食品類情報を更新しました"
+        redirect_to foods_path
+      else
+        flash[:alert] = "エラーにより食品情報を更新できません"
+        render :edit
+      end
   end
 
   private
@@ -47,9 +71,7 @@ class Public::FoodsController < ApplicationController
   end
 
   def food_params
-    params.require(:food).permit(:name, :expiration_date, :jan_code, :image, :genre_id, :place_id, :consume_status, :image) #.tap do |whitelisted|
-    #   whitelisted[:consume_status] = params[:food][:consume_status].to_i
-    # end
+    params.require(:food).permit(:name, :expiration_date, :jan_code, :image, :genre, :place_id, :consume_status)
   end
 
 end
