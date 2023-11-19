@@ -4,6 +4,7 @@ class Family < ApplicationRecord
   has_many :memberships,  dependent: :destroy
   has_many :users, through: :family_users
   has_many :places, dependent: :destroy
+  accepts_nested_attributes_for :places, allow_destroy: true
   # has_many :invites, dependent: :destroy
   validates :name, presence: true
 

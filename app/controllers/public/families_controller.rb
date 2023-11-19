@@ -18,7 +18,7 @@ class Public::FamiliesController < ApplicationController
       flash[:notice] = "グループを作成しました"
       redirect_to show_user_path(@user)
     else
-      flash[:notice] = "エラーによりグループを作成できません"
+      flash[:alert] = "エラーによりグループを作成できません"
       render 'new'
     end
   end
@@ -29,6 +29,9 @@ class Public::FamiliesController < ApplicationController
   end
 
   def edit
+    @family.places.build # 新しい保管場所のフォームを表示するために追加
+    @places = Place.all
+    @place = Place.new
   end
 
   def update
@@ -36,7 +39,7 @@ class Public::FamiliesController < ApplicationController
       flash[:notice] = "グループ情報を更新しました"
       redirect_to family_path(@family)
     else
-      flash[:notice] = "エラーによりグループ情報を更新できません"
+      flash[:alert] = "エラーによりグループ情報を更新できません"
       render :edit
     end
   end
@@ -66,7 +69,7 @@ class Public::FamiliesController < ApplicationController
   end
 
   def family_params
-    params.require(:family).permit(:name)
+    params.require(:family).permit(:name, places_attributes: [:id, :name, :_destroy])
   end
 
   # params[:id]を持つ@familyのowner_idカラムのデータと自分のユーザーIDが一緒かどうかを確かめる。

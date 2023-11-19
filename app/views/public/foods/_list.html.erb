@@ -1,9 +1,0 @@
-<div class="container mt-5">
-  <% if @user.family.present? %>
-    <%= render 'list' %>
-  <% elsif @user.family_users.first.present? %>
-    <%= render 'list' %>
-  <% else %>
-    <%= render 'list' %>
-  <% end %>
-</div>

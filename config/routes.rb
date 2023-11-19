@@ -29,7 +29,8 @@ Rails.application.routes.draw do
 
   scope module: :public do
   	get '/search'=>'search#search'
-    resources :invitations, only: [:new, :edit]
+    # resources :invitations, only: [:new, :edit]
+    resources :places, only: [:create, :destroy]
     resources :foods, only: [:index, :new, :create]
     resources :family_users, only: [:destroy]
     resources :families, only: [:new, :edit, :show, :permit, :create, :update, :destroy] do
@@ -37,7 +38,7 @@ Rails.application.routes.draw do
         get 'show/:id', to: 'families#show', as: 'show_family'
         get 'new' => 'families#new', as: 'new_family'
         get 'permit' => 'families#permit'
-        get 'edit' => 'families#edit'
+        get 'edit' => 'families#edit', as: 'edit_family'
         patch 'update' => 'families#update', as: :update_families
         delete 'destroy', to: 'families#destroy', as: :delete_families
       end

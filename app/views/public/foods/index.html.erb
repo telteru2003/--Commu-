@@ -13,15 +13,13 @@
     </thead>
     <tbody>
       <% @foods.each do |food| %>
-        <%# if @user.present? && food.user.present? && @user.family.present? && food.user.family.present? && @user.family.id == food.user.family.id %> <!-- 同じfamily_idのユーザーのみ閲覧可能 -->
         <tr>
           <td><%= image_tag food.get_foods_image %></td>
           <td><%= food.name %></td>
           <td><%= food.expiration_date.strftime("%Y年%m月%d日") %></td>
           <td><%= food.user.nickname %></td>
-          <td></td>
+          <td><%= food.place&.name %></td>
         </tr>
-        <%# end %>
       <% end %>
     </tbody>
   </table>
