@@ -1,0 +1,9 @@
+              <div class="d-flex">
+                <div class="form-group mr-2">
+                  <%= form_with(model: [@food, Comment.new], url: food_comments_path(@food), local: true, html: { class: 'form-inline' }) do |form| %>
+                    <%= form.label :"コメント", class: 'sr-only' %>
+                    <%= form.text_area :body, rows: 1, class: 'form-control mr-2' %>
+                    <%= form.submit "コメントする", class: 'btn btn-primary' %>
+                  <% end %>
+                </div>
+              </div>

@@ -31,13 +31,12 @@
       <tbody>
         <tr>
           <td><%= image_tag @owner.get_profile_image, size:"25x25" %></td>
-          <td><%= @owner.nickname %></td>
+          <td><%= @owner.nickname.present? ? @owner.nickname : @owner.name %></td>
         </tr>
-
       <% @users.each do |user| %>
         <tr>
           <td><%= image_tag user.get_profile_image, size:"25x25" %></td>
-          <td><%= user.nickname %></td>
+          <td><%= user.nickname.present? ? user.nickname : user.name %></td>
         </tr>
       <% end %>
 

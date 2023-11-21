@@ -28,6 +28,7 @@ class Public::FoodsController < ApplicationController
   def create
     @food = @user.foods.new(food_params)
     if @food.save
+      @comments = @food.comments.reload
       redirect_to foods_path, notice: '食品類が投稿されました'
     else
       render :new
@@ -36,6 +37,7 @@ class Public::FoodsController < ApplicationController
 
   def show
     set_food_and_places
+    @comments = @food.comments.order(id: :desc).page(params[:page]).per(10)
   end
 
   def edit
@@ -53,18 +55,18 @@ class Public::FoodsController < ApplicationController
     end
   end
 
-def destroy
-  @user = current_user
-  @food = Food.find(params[:id])
+  def destroy
+    @user = current_user
+    @food = Food.find(params[:id])
 
-  if @food
-    @food.destroy!
-    flash[:alert] = "食品情報が削除されました"
-  else
-    flash[:alert] = "指定された食品情報は存在しません"
+    if @food
+      @food.destroy!
+      flash[:alert] = "食品情報が削除されました"
+    else
+      flash[:alert] = "指定された食品情報は存在しません"
+    end
+    redirect_to foods_path
   end
-  redirect_to foods_path
-end
 
   private
 
@@ -80,6 +82,7 @@ end
       @places = family.places
     else
       @foods = @user.foods.includes(:place, :likes).where(likes: { user_id: @user.id })
+      @places = []
     end
   end
 

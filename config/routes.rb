@@ -33,6 +33,7 @@ Rails.application.routes.draw do
     resources :places, only: [:create, :destroy]
     resources :foods, only: [:index, :new, :edit, :show, :create, :update, :destroy] do
       resources :likes, only: [:create, :destroy]
+      resources :comments, only: [:create, :destroy]
       member do
         get 'show/:id', to: 'foods#show', as: 'show_food'
         get 'edit' => 'foods#edit', as: 'edit_food'

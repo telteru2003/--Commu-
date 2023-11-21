@@ -13,12 +13,13 @@
               <%= image_tag @food.get_foods_image, size: "100x100" %>
             </td>
             <td>
-              いいねされた数：<%= @food.likes_count %>
-            </td>
+              いいねされた数：<%= @food.likes_count %>　　　コメント数：<%= @food.comments.count %>
             </td>
           </tr>
           <tr>
-            <td>コメントボックス</td>
+            <td>
+              <%= render 'public/comments/form' %>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -40,11 +41,11 @@
         </tr>
         <tr>
           <td class="col-md-2" style="background-color: #EEEEEE">保管場所</td>
-          <td class="col-md-7"><%= @food.place.name %></td>
+          <td class="col-md-7"><%= @food.place&.name %></td>
         </tr>
         <tr>
           <td class="col-md-2" style="background-color: #EEEEEE">賞味期限 / 消費期限</td>
-          <td class="col-md-7"><%= @food.expiration_date %></td>
+          <td class="col-md-7"><%= @food.expiration_date.strftime("%Y年%m月%d日") %></td>
         </tr>
         <tr>
           <td class="col-md-2" style="background-color: #EEEEEE">ステータス</td>
@@ -57,8 +58,4 @@
 </div>
 
 
-コメント一覧
-
-  </div>
-</div>
-
+<%= render 'public/comments/index' %>
