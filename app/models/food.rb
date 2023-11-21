@@ -11,6 +11,10 @@ class Food < ApplicationRecord
   enum consume_status: { 未消費: 0, 消費済み: 1 }
   enum genre: { 食料: 0, 飲料: 1, 調味料: 2, その他: 3 }
 
+  def likes_count
+    likes.count
+  end
+
   def self.search_for(content,method)
     return none if content.blank?
      if method == 'perfect'

@@ -19,6 +19,10 @@ class User < ApplicationRecord
   #   self.save
   # end
 
+  def liked?(food)
+    likes.exists?(food: food)
+  end
+
 # ゲストログイン
   def self.guest_login
     find_or_create_by!(email: 'guest@example.com') do |user|

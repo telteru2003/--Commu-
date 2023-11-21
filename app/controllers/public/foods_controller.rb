@@ -1,4 +1,5 @@
 class Public::FoodsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_user
 
   def index
@@ -16,6 +17,7 @@ class Public::FoodsController < ApplicationController
       sort_direction = params[:sort_by_expiration_date] == "desc" ? "DESC" : "ASC"
       @foods = @foods.order("expiration_date #{sort_direction}")
     end
+    @foods = @foods.includes(:likes)
   end
 
   def new
@@ -74,10 +76,10 @@ end
     family = @user.family || @user.family_users.first&.family
     if family.present?
       user_ids = family.users.pluck(:id) << family.owner.id
-      @foods = Food.includes(:place, :user).where(user_id: user_ids)
+      @foods = Food.includes(:place, :user, :likes).where(user_id: user_ids)
       @places = family.places
     else
-      @foods = @user.foods.includes(:place)
+      @foods = @user.foods.includes(:place, :likes)
     end
   end
 
