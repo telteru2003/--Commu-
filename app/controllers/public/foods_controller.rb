@@ -74,17 +74,23 @@ class Public::FoodsController < ApplicationController
     @user = current_user
   end
 
-  def set_foods_and_places
+def set_foods_and_places
+  if @user.email == 'guest@example.com'
+    # ゲストユーザーの場合はゲストユーザーの投稿のみを取得
+    @foods = Food.includes(:place, :user, :likes).where(user_id: @user.id)
+    @places = []
+  elsif @user.family.present?
+    # グループに所属している場合はグループメンバー全員の投稿を取得
     family = @user.family || @user.family_users.first&.family
-    if family.present?
-      user_ids = family.users.pluck(:id) << family.owner.id
-      @foods = Food.includes(:place, :user, :likes).where(user_id: user_ids)
-      @places = family.places
-    else
-      @foods = @user.foods.includes(:place, :likes).where(likes: { user_id: @user.id })
-      @places = []
-    end
+    user_ids = family.users.pluck(:id) << family.owner.id
+    @foods = Food.includes(:place, :user, :likes).where(user_id: user_ids)
+    @places = family.places
+  else
+    # それ以外の場合はユーザーがいいねした投稿を取得
+    @foods = @user.foods.includes(:place, :likes).where(likes: { user_id: @user.id })
+    @places = []
   end
+end
 
   def set_food_and_places
     set_foods_and_places

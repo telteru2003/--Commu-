@@ -47,7 +47,7 @@
     </table>
 
 
-<% if @user == current_user %>
+<% if @user == current_user && current_user.likes.any? %>
   <div class="row mt-5">
     <h3 class="font-weight-bold">いいねした投稿一覧</h3>
     <table class="table">
@@ -76,6 +76,7 @@
       </tbody>
     </table>
   </div>
+<% else %>
 <% end %>
 
   </div>

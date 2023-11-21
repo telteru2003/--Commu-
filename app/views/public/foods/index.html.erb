@@ -1,10 +1,13 @@
 <div class="container">
-  <% if !@user.family.present? %>
+  <% if @user.email == 'guest@example.com' %>
     <div class="alert alert-info mt-3">
-      グループに参加していないようです。食品の管理をより効果的に行うために、<%= link_to 'グループに参加', new_family_path %> してみませんか？
+      ゲストユーザーは<%= link_to '食品類の新規投稿', new_food_path %>のみ行えますが閲覧はできません。
     </div>
-  <% end %>
-
+  <% elsif !@user.family.present? %>
+    <div class="alert alert-info mt-3">
+      グループに参加していないようです。<br>食品の管理をより効果的に行うために、<%= link_to 'グループに参加または作成', show_user_path(@user) %> してみませんか？
+    </div>
+  <% else %>
   <div class="row">
     <div class="d-flex align-items-center ml-1">
 
@@ -37,7 +40,7 @@
       <%= form_tag(foods_path, method: :get, class: "form-inline ml-2") do %>
         <div class="form-group">
           <%= label_tag "sort_by_expiration_date", "賞味 / 消費期限:" %>
-          <%= select_tag "sort_by_expiration_date", options_for_select({ "作成順" => "" , "早い順" => "asc", "遅い順" => "desc" }, params[:sort_by_expiration_date] || "desc"), class: "form-control ml-1" %>
+          <%= select_tag "sort_by_expiration_date", options_for_select({ "作成順" => "" , "早い順" => "asc", "遅い順" => "desc" }, params[:sort_by_expiration_date] || "asc"), class: "form-control ml-1" %>
         </div>
         <%= hidden_field_tag "place_id", params[:place_id] %>
         <%= hidden_field_tag "genre", params[:genre] %>
@@ -95,9 +98,11 @@
       <tr class="table-borderless">
         <td colspan="6">
           <% latest_comments = food.comments.order(created_at: :desc).limit(5) %>
-          <% latest_comments.each do |latest_comment| %>
-          <i class="fa-regular fa-comments"></i>
-          <%= truncate(latest_comment.body, length: 15) %>　<% end %>
+          <% latest_comments.each_with_index do |latest_comment, index| %>
+            <% comment_icon = index.odd? ? 'fa-regular' : 'fa-solid' %>
+            <i class="<%= comment_icon %> fa-comment"></i>
+            <%= truncate(latest_comment.body, length: 15) %>　　　<% end %>
+
         </td>
       <% end %>
       <% else %>
@@ -107,3 +112,4 @@
       <% end %>
     </tbody>
   </table>
+<% end %>
