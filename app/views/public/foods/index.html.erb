@@ -15,8 +15,18 @@
           <%= label_tag "consume_status", "消費状況:" %>
           <%= select_tag "consume_status", options_for_select([["すべて", ""]] + Food.consume_statuses.keys.map { |status| [Food.human_attribute_name("consume_status.#{status}"), status] }, params[:consume_status]), class: "form-control ml-1" %>
         </div>
+        <%= button_tag "条件リセット", type: 'button', class: "btn btn-secondary ml-1", onclick: "resetFilters();" %>
         <%= submit_tag "絞り込む", class: "btn btn-primary ml-1" %>
       <% end %>
+
+      <script>
+        function resetFilters() {
+          document.getElementById("place_id").value = "";
+          document.getElementById("genre").value = "";
+          document.getElementById("consume_status").value = "";
+          window.location.href = "<%= foods_path %>"; // 絞り込み条件をリセットしてページを再読み込み
+        }
+      </script>
 
       <%= form_tag(foods_path, method: :get, class: "form-inline ml-2") do %>
         <div class="form-group">
@@ -26,13 +36,12 @@
         <%= hidden_field_tag "place_id", params[:place_id] %>
         <%= hidden_field_tag "genre", params[:genre] %>
         <%= hidden_field_tag "consume_status", params[:consume_status] %>
-        <%= submit_tag "絞り込んだ内容を並び替え", class: "btn btn-primary ml-1" %>
+        <%= submit_tag "並び替え", class: "btn btn-primary ml-1" %>
       <% end %>
 
     </div>
   </div>
 </div>
-
 
 <table class="table">
   <thead>
@@ -50,7 +59,7 @@
       <tr>
         <td><%= image_tag food.get_foods_image %></td>
         <td>
-          <%= food.name %>
+          <%= food.name %><br>
           <% if current_user.liked?(food) %>
             <%= link_to food_like_path(food, food.likes.find_by(user: current_user)), method: :delete, remote: true do %>
               <span style="color:red;">❤︎<%= food.likes_count %></span>

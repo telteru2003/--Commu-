@@ -6,22 +6,22 @@
 
   <div class="row">
     <div class="d-flex align-items-center">
-<table class="table table-borderless">
-  <tbody>
-    <tr>
-      <td class="mr-5 font-weight-bold" rowspan="2">
-        <%= image_tag @food.get_foods_image, size: "100x100" %>
-      </td>
-      <td>
-        いいねされた数：<span style="color:red;"><%= @food.likes_count %></span>
-      </td>
-    </tr>
-    <tr>
-      <td>300</td>
-    </tr>
-  </tbody>
-</table>
-
+      <table class="table table-borderless">
+        <tbody>
+          <tr>
+            <td class="mr-5 font-weight-bold" rowspan="2">
+              <%= image_tag @food.get_foods_image, size: "100x100" %>
+            </td>
+            <td>
+              いいねされた数：<%= @food.likes_count %>
+            </td>
+            </td>
+          </tr>
+          <tr>
+            <td>コメントボックス</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <table class="table">
@@ -56,22 +56,8 @@
   </div>
 </div>
 
-      <%# コメント一覧 %>
-    <!--  <span id="comment_js">-->
-        <%#= render 'user/comments/comment', tweet: @tweet %>
-    <!--  </span>-->
 
-      <%# コメントボタン %>
-    <!--  <div class= 'comment__new-box' >-->
-    <!--    <i class="far fa-comment comment__title"> コメントしよう</i>-->
-        <%#= form_with(model:[@tweet, @new_comment], remote: true) do |f| %>
-          <%#= f.text_area :text, placeholder: 'コメントを記入', class: 'comment__new-text', required: true %>
-          <%#= f.submit 'コメントする', class: 'button__black comment__new-button' %>
-        <%# end %>
-    <!--  </div>-->
-    <!--</div>-->
-
-
+コメント一覧
 
   </div>
 </div>
