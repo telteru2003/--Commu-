@@ -1,11 +1,27 @@
 <div class="container">
   <h2 style="padding: 10px; margin: 10px;" class="font-weight-bold my-5">
     <span style="background-color: #EEEEEE">　<%= @food.name %>　</span>
+    <%= link_to "編集", edit_food_path(@food), class:"btn btn-success ml-1"%>
   </h2>
 
   <div class="row">
     <div class="d-flex align-items-center">
-      <p class="mr-5 font-weight-bold"><%= image_tag @food.get_foods_image, size:"100x100" %></p>
+<table class="table table-borderless">
+  <tbody>
+    <tr>
+      <td class="mr-5 font-weight-bold" rowspan="2">
+        <%= image_tag @food.get_foods_image, size: "100x100" %>
+      </td>
+      <td>
+        いいねされた数：<span style="color:red;"><%= @food.likes_count %></span>
+      </td>
+    </tr>
+    <tr>
+      <td>300</td>
+    </tr>
+  </tbody>
+</table>
+
     </div>
 
     <table class="table">
