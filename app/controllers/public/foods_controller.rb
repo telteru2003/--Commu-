@@ -79,7 +79,7 @@ end
       @foods = Food.includes(:place, :user, :likes).where(user_id: user_ids)
       @places = family.places
     else
-      @foods = @user.foods.includes(:place, :likes)
+      @foods = @user.foods.includes(:place, :likes).where(likes: { user_id: @user.id })
     end
   end
 

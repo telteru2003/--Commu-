@@ -46,5 +46,37 @@
       </tbody>
     </table>
 
+
+<% if @user == current_user %>
+  <div class="row mt-5">
+    <h3 class="font-weight-bold">いいねした投稿一覧</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>画像</th>
+          <th>食品名</th>
+          <th>いいねした日時</th>
+        </tr>
+      </thead>
+      <tbody>
+<% current_user.likes.each do |like| %>
+  <tr>
+    <td>
+      <%= link_to(image_tag(like.food.get_foods_image, size: "50x50"), like.food) %>
+    </td>
+    <td>
+      <%= link_to(like.food.name, like.food, style: ("color: red;" if like.food.consume_status == '消費済み')) %>
+      <%= raw "(消費済)" if like.food.consume_status == '消費済み' %>
+    </td>
+    <td>
+      <%= content_tag(:span, like.created_at.strftime("%Y年%m月%d日 %H時%M分"), style: (like.food.consume_status == '消費済み' ? "color: red;" : "")) %>
+    </td>
+  </tr>
+<% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
+
   </div>
 </div>

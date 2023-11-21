@@ -6,9 +6,15 @@ class Public::LikesController < ApplicationController
     @like = current_user.likes.build(food: @food)
 
     if @like.save
-      redirect_to foods_path, notice: 'いいねしました'
+      respond_to do |format|
+        format.html { redirect_to foods_path, notice: 'いいねしました' }
+        format.json { render json: { count: @food.likes_count } }
+      end
     else
-      redirect_to foods_path, alert: 'いいねできませんでした'
+      respond_to do |format|
+        format.html { redirect_to foods_path, alert: 'いいねできませんでした' }
+        format.json { render json: { error: 'いいねできませんでした' }, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -17,9 +23,15 @@ class Public::LikesController < ApplicationController
     @like = current_user.likes.find_by(food: @food)
 
     if @like.destroy
-      redirect_to foods_path, notice: 'いいねを取り消しました'
+      respond_to do |format|
+        format.html { redirect_to foods_path, notice: 'いいねを取り消しました' }
+        format.json { render json: { count: @food.likes_count } }
+      end
     else
-      redirect_to foods_path, alert: 'いいねの取り消しができませんでした'
+      respond_to do |format|
+        format.html { redirect_to foods_path, alert: 'いいねの取り消しができませんでした' }
+        format.json { render json: { error: 'いいねの取り消しができませんでした' }, status: :unprocessable_entity }
+      end
     end
   end
 end

@@ -1,4 +1,3 @@
-
 <div class="container">
   <div class="row">
     <div class="d-flex align-items-center ml-1">
@@ -44,20 +43,20 @@
       <th scope="col">投稿者</th>
       <th scope="col">保管場所</th>
       <th scope="col"></th>
-
     </tr>
   </thead>
   <tbody>
     <% @foods.each do |food| %>
       <tr>
         <td><%= image_tag food.get_foods_image %></td>
-        <td><%= food.name %>
+        <td>
+          <%= food.name %>
           <% if current_user.liked?(food) %>
-            <%= link_to food_like_path(food, food.likes.find_by(user: current_user)), method: :delete do %>
+            <%= link_to food_like_path(food, food.likes.find_by(user: current_user)), method: :delete, remote: true do %>
               <span style="color:red;">❤︎<%= food.likes_count %></span>
             <% end %>
           <% else %>
-            <%= link_to food_likes_path(food), method: :post do %>
+            <%= link_to food_likes_path(food), method: :post, remote: true do %>
               <span>❤︎<%= food.likes_count %></span>
             <% end %>
           <% end %>
@@ -66,8 +65,8 @@
         <td><%= food.user.nickname %></td>
         <td><%= food.place&.name %></td>
         <td>
-          <%= link_to "編集", edit_food_path(food), class:"btn btn-success ml-1"%>
           <%= link_to "詳細", food_path(food), class:"btn btn-info ml-1"%>
+          <%= link_to "編集", edit_food_path(food), class:"btn btn-success ml-1"%>
         </td>
       </tr>
     <% end %>
