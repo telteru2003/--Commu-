@@ -1,33 +1,54 @@
-    <table class="table">
-      <thead>
-        <tr style="background-color: #EEEEEE;">
-            <th>ID</th>
-            <th>グループ名</th>
-            <th>作成者</th>
-            <th>メンバー数</th>
-            <th></th>
-        </tr>
-      </thead>
 
-      <tbody>
-        <% families.each do |family| %>
-         <tr>
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr style="background-color: #EEEEEE;">
+        <th>ID</th>
+        <th></th>
+        <th>ユーザー名</th>
+        <th>所属グループ</th>
+        <th>メールアドレス</th>
+        <th>会員状況</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% users.each do |user| %>
+        <tr>
           <td class="info col-xs-1">
-            <%= family.id %>
+            <%= user.id %>
+          </td>
+          <td class="info col-xs-1">
+            <%= image_tag user.get_profile_image, size: "25x25" %>
           </td>
           <td class="text-left">
-            <%= family.name %>
+            <%= user.name %>
           </td>
           <td class="text-left">
-            <%= family.owner.name %>
+            <%= user.family&.name || user.family_users&.first&.family&.name || "未所属" %>
           </td>
           <td class="text-left">
-            <%= family.family_users.count %>
+            <%= user.email %>
           </td>
           <td class="col-xs-2">
-            <%= link_to "削除", admin_family_path(family), method: :delete, data: { confirm: '削除します。 よろしいですか？' }, class: "btn btn-danger" %>
+            <% if user.is_active == false %>
+              <p class="text-secondary">退会済</p>
+            <% else %>
+              <p class="text-success">有効</p>
+            <% end %>
           </td>
-         </tr>
-        <% end %>
-      </tbody>
-    </table>
+          <td class="col-xs-2">
+            <% if user.email != 'guest@example.com' %>
+              <% if user.is_active %>
+                <%= link_to "退会", admin_user_path(user), method: :patch, data: { confirm: '退会します。 よろしいですか？' }, class: "btn btn-danger" %>
+              <% else %>
+                <%= link_to "有効", admin_user_path(user), method: :patch, data: { confirm: '有効にします。 よろしいですか？' }, class: "btn btn-success" %>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

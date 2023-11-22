@@ -6,12 +6,15 @@ class Family < ApplicationRecord
   has_many :likes, through: :users
   has_many :places, dependent: :destroy
   accepts_nested_attributes_for :places, allow_destroy: true
-  # has_many :invites, dependent: :destroy
   validates :name, presence: true
 
   before_destroy :destroy_likes
 
-# ユーザがコミュニティに所属していればtrueを返す
+  def all_members_count
+    family_users.count
+  end
+
+  # ユーザがコミュニティに所属していればtrueを返す
   def user_membership?(user)
     users.include?(user)
   end

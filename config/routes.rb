@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     get 'homes' => 'homes#index', as: 'homes'
   	get '/search'=>'search#search'
   	resources :families, only: [:index, :destroy]
-    resources :users, only: [:index, :destroy]
+    resources :users, only: [:index, :update]
   	resources :foods, only: [:index, :destroy]
   	resources :comments, only: [:index, :destroy]
   end

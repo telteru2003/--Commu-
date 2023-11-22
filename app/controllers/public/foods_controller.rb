@@ -79,7 +79,7 @@ def set_foods_and_places
     # ゲストユーザーの場合はゲストユーザーの投稿のみを取得
     @foods = Food.includes(:place, :user, :likes).where(user_id: @user.id)
     @places = []
-  elsif @user.family.present?
+  elsif @user.family.present? || @user.family_users.first&.family
     # グループに所属している場合はグループメンバー全員の投稿を取得
     family = @user.family || @user.family_users.first&.family
     user_ids = family.users.pluck(:id) << family.owner.id
