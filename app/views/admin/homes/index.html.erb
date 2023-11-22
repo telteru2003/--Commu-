@@ -1,1 +1,179 @@
-index
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 mb-4">
+      <div class="card">
+        <div class="card-header">
+          <h3>最新のグループ</h3>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr style="background-color: #EEEEEE;">
+                <th>ID</th>
+                <th>グループ名</th>
+                <th>作成者</th>
+                <th>メンバー数</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @latest_families.each do |family| %>
+                <tr>
+                  <td class="info col-xs-1">
+                    <%= family.id %>
+                  </td>
+                  <td class="text-left">
+                    <%= family.name %>
+                  </td>
+                  <td class="text-left">
+                    <%= family.owner.nickname.present? ? family.owner.nickname : family.owner.name %>
+                  </td>
+                  <td class="text-left">
+                    <%= family.family_users.count + 1 %>
+                  </td>
+                  <td class="col-xs-2">
+                    <%= link_to "削除", admin_family_path(family), method: :delete, data: { confirm: '削除します。 よろしいですか？' }, class: "btn btn-danger" %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+      <div class="card">
+        <div class="card-header">
+          <h3>最新のユーザー</h3>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr style="background-color: #EEEEEE;">
+                <th>ID</th>
+                <th></th>
+                <th>ユーザー名</th>
+                <th>会員状況</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @latest_users.each do |user| %>
+                <tr>
+                  <td class="info col-xs-1">
+                    <%= user.id %>
+                  </td>
+                  <td class="info col-xs-1">
+                    <%= image_tag user.get_profile_image, size: "25x25" %>
+                  </td>
+                  <td class="text-left">
+                    <%= user.nickname.present? ? user.nickname : user.name %>
+                  </td>
+                  <td class="col-xs-2">
+                    <% if user.is_active == false %>
+                      <p class="text-secondary">退会済</p>
+                    <% else %>
+                      <p class="text-success">有効</p>
+                    <% end %>
+                  </td>
+                  <td class="col-xs-2">
+                    <% if user.email != 'guest@example.com' %>
+                      <% if user.is_active %>
+                        <%= link_to "退会", admin_user_path(user), method: :patch, data: { confirm: '退会します。 よろしいですか？' }, class: "btn btn-danger" %>
+                      <% else %>
+                        <%= link_to "有効", admin_user_path(user), method: :patch, data: { confirm: '有効にします。 よろしいですか？' }, class: "btn btn-success" %>
+                      <% end %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-4">
+      <div class="card">
+        <div class="card-header">
+          <h3>最新の食品類</h3>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr style="background-color: #EEEEEE;">
+                <th>ID</th>
+                <th></th>
+                <th>食品類名</th>
+                <th>投稿者</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @latest_foods.each do |food| %>
+                <tr>
+                  <td class="info col-xs-1">
+                    <%= food.id %>
+                  </td>
+                  <td class="info col-xs-1">
+                    <%= image_tag food.get_foods_image, size: "25x25" %>
+                  </td>
+                  <td class="text-left">
+                    <%= food.name %>
+                  </td>
+                  <td class="text-left">
+                    <%= food.user.nickname.present? ? food.user.nickname : food.user.name %>
+                  </td>
+                  <td class="col-xs-2">
+                    <%= link_to "削除", admin_food_path(food), method: :delete, data: { confirm: '削除します。 よろしいですか？' }, class: "btn btn-danger" %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+      <div class="card">
+        <div class="card-header">
+          <h3>最新のコメント</h3>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr style="background-color: #EEEEEE;">
+                <th>ID</th>
+                <th>投稿者</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @latest_comments.each do |comment| %>
+                <tr>
+                  <td class="info col-xs-1">
+                    <%= comment.id %>
+                  </td>
+                  <td class="text-left">
+                    <%= comment.user.nickname.present? ? comment.user.nickname : comment.user.name %>
+                  </td>
+                  <td class="text-left">
+                    <%= comment.body %>
+                  </td>
+                  <td class="col-xs-2">
+                    <%= link_to "削除", admin_comment_path(comment), method: :delete, data: { confirm: '削除します。 よろしいですか？' }, class: "btn btn-danger" %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

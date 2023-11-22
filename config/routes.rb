@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :update]
   	resources :foods, only: [:index, :destroy]
   	resources :comments, only: [:index, :destroy]
+    resources :homes, only: [:index]
   end
 
 # 【ユーザー】 新規登録・ログイン・ログアウト
