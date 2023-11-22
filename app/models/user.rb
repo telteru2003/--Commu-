@@ -40,17 +40,28 @@ class User < ApplicationRecord
     update(is_active: false)
   end
 
-def get_profile_image
-  if profile_image.attached?
-    profile_image.variant(resize_to_limit: [100, 100]).processed
-  else
-    default_image_path = Rails.root.join('app/assets/images/default-image.jpg')
-    default_image = File.open(default_image_path)
-    profile_image.attach(io: default_image, filename: 'default-image.jpg', content_type: 'image/jpeg')
-    default_image.close
-    profile_image.variant(resize_to_limit: [100, 100]).processed
+  def get_profile_image
+    if profile_image.attached?
+      profile_image.variant(resize_to_limit: [100, 100]).processed
+    else
+      default_image_path = Rails.root.join('app/assets/images/default-image.jpg')
+      default_image = File.open(default_image_path)
+      profile_image.attach(io: default_image, filename: 'default-image.jpg', content_type: 'image/jpeg')
+      default_image.close
+      profile_image.variant(resize_to_limit: [100, 100]).processed
+    end
   end
-end
+
+  def self.search_for(content,method)
+    return none if content.blank?
+      if method == 'forward'
+        User.where('name LIKE ?', content + '%')
+      elsif method == 'backword'
+        User.where('name LIKE ?', '%' + content)
+      else
+        User.where('name LIKE ?', '%' + content + '%')
+      end
+  end
 
   # protected
 

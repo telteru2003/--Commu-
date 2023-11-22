@@ -1,9 +1,20 @@
 Rails.application.routes.draw do
 
-# 【管理者】 ログイン・ログアウト
-  devise_for :admins, controllers: {
-    sessions: 'admin/sessions'
+# 【管理者】
+
+  devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
+    :sessions => 'admin/sessions',
+    :registrations => 'admin/registrations',
   }
+
+  namespace :admin do
+    get 'homes' => 'homes#index', as: 'homes'
+  	get '/search'=>'search#search'
+  	resources :families, only: [:index, :show, :edit, :destroy]
+    resources :users, only: [:index, :show, :edit, :destroy]
+  	resources :foods, only: [:index, :show, :edit, :destroy]
+  	resources :comments, only: [:index, :show, :edit, :destroy]
+  end
 
 # 【ユーザー】 新規登録・ログイン・ログアウト
   devise_for :users, controllers: {

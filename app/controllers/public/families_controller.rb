@@ -1,8 +1,6 @@
 class Public::FamiliesController < ApplicationController
   before_action :authenticate_user!
-  before_action :ensure_correct_user, only: [:edit, :update, :destroy, :memberships]
-  before_action :set_family, only: [:show, :edit, :update, :memberships, :permit, :destroy]
-  before_action :set_user
+  before_action :set_family, only: [:show, :edit, :update, :permit, :destroy]
 
   def new
     @family = Family.new
@@ -44,14 +42,6 @@ class Public::FamiliesController < ApplicationController
     end
   end
 
-  def memberships
-    @memberships = @family.memberships.page(params[:page])
-  end
-
-  def permit
-    @memberships = @family.memberships.page(params[:page])
-  end
-
   def destroy
     @family.destroy!
     flash[:notice] = 'グループを削除しました'
@@ -64,20 +54,8 @@ class Public::FamiliesController < ApplicationController
     @family = Family.find(params[:id])
   end
 
-  def set_user
-    @user = current_user
-  end
-
   def family_params
-    params.require(:family).permit(:name, places_attributes: [:id, :name, :_destroy])
+    params.require(:family).permit(:name, :owner_id)
   end
 
-  # params[:id]を持つ@familyのowner_idカラムのデータと自分のユーザーIDが一緒かどうかを確かめる。
-  # 違う場合、処理をする。グループ一覧ページへ遷移させる。before_actionで使用する。
-  def ensure_correct_user
-    @family = Family.find(params[:id])
-    unless @family.owner_id == current_user.id
-      redirect_to show_user_path(current_user.id), alert: "グループオーナーのみ編集が可能です"
-    end
-  end
 end

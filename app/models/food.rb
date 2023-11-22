@@ -17,15 +17,13 @@ class Food < ApplicationRecord
 
   def self.search_for(content,method)
     return none if content.blank?
-     if method == 'perfect'
-      Food.where(name: content)
-    # elsif method == 'forward'
-    #   Family.where('name LIKE ?', content + '%')
-    # elsif method == 'backword'
-    #   Family.where('name LIKE ?', '%' + content)
-     else
-       Food.where('name LIKE ?', '%' + content + '%')
-     end
+      if method == 'forward'
+        Food.where('name LIKE ?', content + '%')
+      elsif method == 'backword'
+        Food.where('name LIKE ?', '%' + content)
+      else
+        Food.where('name LIKE ?', '%' + content + '%')
+      end
   end
 
   def get_foods_image

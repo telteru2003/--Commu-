@@ -1,9 +1,9 @@
-class Admin::UsersController < ApplicationController
+class Admin::FamiliesController < ApplicationController
   before_action :authenticate_admin!
-  before_action :set_user, only: [:show, :edit, :destroy]
+  before_action :set_family, only: [:show, :edit, :destroy]
 
   def index
-    @users = User.all.page(params[:page]).per(10)
+    @families = Families.page(params[:page]).per(10)
   end
 
   def show
@@ -13,7 +13,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def destroy
-    if @user.destroy!
+    if @family.destroy!
       flash[:alert] = "食品情報が削除されました"
     else
       flash[:alert] = "指定された食品情報は存在しません"
@@ -23,12 +23,12 @@ class Admin::UsersController < ApplicationController
 
   private
 
-  def set_user
-    @user = User.find(params[:id])
+  def set_family
+    @family = Family.find(params[:id])
   end
 
-  def user_params
-    params.require(:user).permit(:name, :nickname, :remember_token, :is_active)
+  def family_params
+    params.require(:family).permit(:name, :owner_id)
   end
 
 end

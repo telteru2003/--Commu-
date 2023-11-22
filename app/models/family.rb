@@ -9,21 +9,20 @@ class Family < ApplicationRecord
   validates :name, presence: true
 
 # ユーザがコミュニティに所属していればtrueを返す
-    def user_membership?(user)
-        users.include?(user)
-    end
+  def user_membership?(user)
+    users.include?(user)
+  end
 
   def self.search_for(content,method)
     return none if content.blank?
-     if method == 'perfect'
-      Family.where(name: content)
-    # elsif method == 'forward'
-    #   Family.where('name LIKE ?', content + '%')
-    # elsif method == 'backword'
-    #   Family.where('name LIKE ?', '%' + content)
-     else
-       Family.where('name LIKE ?', '%' + content + '%')
-     end
+      if method == 'forward'
+        Family.where('name LIKE ?', content + '%')
+      elsif method == 'backword'
+        Family.where('name LIKE ?', '%' + content)
+      else
+        Family.where('name LIKE ?', '%' + content + '%')
+      end
   end
+
 
 end
