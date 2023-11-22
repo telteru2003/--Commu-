@@ -1,24 +1,18 @@
 class Admin::FamiliesController < ApplicationController
   before_action :authenticate_admin!
-  before_action :set_family, only: [:show, :edit, :destroy]
+  before_action :set_family, only: [:destroy]
 
   def index
-    @families = Families.page(params[:page]).per(10)
-  end
-
-  def show
-  end
-
-  def edit
+    @families = Family.page(params[:page]).per(10)
   end
 
   def destroy
     if @family.destroy!
-      flash[:alert] = "食品情報が削除されました"
+      flash[:alert] = "グループが削除されました"
     else
-      flash[:alert] = "指定された食品情報は存在しません"
+      flash[:alert] = "エラーにより削除できません"
     end
-    redirect_to admin_family_path(@family)
+    redirect_to admin_family_path
   end
 
   private

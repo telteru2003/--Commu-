@@ -7,6 +7,7 @@ class Public::FamiliesController < ApplicationController
   end
 
   def create
+    @user = current_user
     @family = Family.new(family_params)
     @family.owner_id = current_user.id
 
