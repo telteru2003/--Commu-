@@ -24,7 +24,7 @@
             <%= image_tag user.get_profile_image, size: "25x25" %>
           </td>
           <td class="text-left">
-            <%= user.nickname.present? ? user.nickname : user.name %>
+            <%= user.name %>
           </td>
           <td class="text-left">
             <%= user.family&.name || user.family_users&.first&.family&.name || "未所属" %>

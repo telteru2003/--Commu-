@@ -6,14 +6,17 @@ class Admin::SearchController < ApplicationController
     @content = params[:content]
     @method = params[:method]
 
-    if @model == 'family'
-      @records = Family.search_for(@content,@method)
-    elsif @model == 'user'
-      @records = User.search_for(@content, @method)
-    elsif @model == 'food'
-      @records = Food.search_for(@content, @method)
-    elsif @model == 'comment'
-      @records = Comment.search_for(@content, @method)
-    end
+    # ポリモーフィックな検索を行う
+    @records = perform_search(@model, @content, @method)
+  end
+
+  private
+
+  def perform_search(model, content, method)
+    # 対応するモデルを取得
+    searchable_model = model.capitalize.constantize
+
+    # ポリモーフィックな検索を実行
+    searchable_model.search_for(content, method)
   end
 end

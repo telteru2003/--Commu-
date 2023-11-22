@@ -32,7 +32,7 @@
             <%= food.name %>
           </td>
           <td class="text-left">
-            <%= food.user.nickname.present? ? food.user.nickname : food.user.name %>
+            <%= food.user.name %>
           </td>
           <td class="text-left">
             <%= food.expiration_date.strftime("%Y年%m月%d日") %>

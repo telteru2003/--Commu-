@@ -1,4 +1,6 @@
-
+<% if params[:content].present? %>
+  <h3>食品類 「<span style="color: red;"><%= params[:content] %></span>」 検索結果</h3>
+<% end %>
 <div class="container">
   <table class="table">
     <thead>
@@ -32,7 +34,7 @@
             <%= food.name %>
           </td>
           <td class="text-left">
-            <%= food.user.nickname.present? ? food.user.nickname : food.user.name %>
+            <%= food.user.name %>
           </td>
           <td class="text-left">
             <%= food.expiration_date.strftime("%Y年%m月%d日") %>

@@ -1,4 +1,6 @@
-
+<% if params[:content].present? %>
+  <h3>コメント 「<span style="color: red;"><%= params[:content] %></span>」 検索結果</h3>
+<% end %>
 <div class="container">
   <table class="table">
     <thead>
@@ -22,7 +24,7 @@
             <%= comment.food.name %>
           </td>
           <td class="text-left">
-            <%= comment.user.nickname.present? ? comment.user.nickname : comment.user.name %>
+            <%= comment.user.name %>
           </td>
           <td class="text-left">
             <%= comment.body %>

@@ -1,20 +1,16 @@
 <% if @model == "family" %>
-  <h3>グループ検索結果</h3>
   <div class="container">
     <%= render 'admin/families/index', families: @records %>
   </div>
 <% elsif @model == "user"%>
-  <h3>ユーザー検索結果</h3>
   <div class="container">
     <%= render 'admin/users/index', users: @records%>
   </div>
 <% elsif @model == "food"%>
-  <h3>食品類検索結果</h3>
   <div class="container">
     <%= render 'admin/foods/index', foods: @records%>
   </div>
 <% elsif @model == "comment"%>
-  <h3>コメント検索結果</h3>
   <div class="container">
     <%= render 'admin/comments/index', comments: @records%>
   </div>

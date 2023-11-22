@@ -1,3 +1,6 @@
+<% if params[:content].present? %>
+  <h3>グループ 「<span style="color: red;"><%= params[:content] %></span>」 検索結果</h3>
+<% end %>
   <div class="container">
     <table class="table">
       <thead>
@@ -21,7 +24,7 @@
             <%= family.name %>
           </td>
           <td class="text-left">
-            <%= family.owner.nickname.present? ? family.owner.nickname : family.owner.name %>
+            <%= family.owner.name %>
           </td>
           <td class="text-left">
             <%= family.family_users.count + 1 %>
