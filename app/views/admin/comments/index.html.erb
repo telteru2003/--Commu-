@@ -1,0 +1,40 @@
+<h3>コメント一覧</h3>
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr style="background-color: #EEEEEE;">
+        <th>ID</th>
+        <th>コメント対象</th>
+        <th>投稿者</th>
+        <th></th>
+        <th>投稿日時</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @comments.each do |comment| %>
+        <tr>
+          <td class="info col-xs-1">
+            <%= comment.id %>
+          </td>
+          <td class="text-left">
+            <%= comment.food.name %>
+          </td>
+          <td class="text-left">
+            <%= comment.user.nickname.present? ? comment.user.nickname : comment.user.name %>
+          </td>
+          <td class="text-left">
+            <%= comment.body %>
+          <td class="text-left">
+            <%= content_tag(:span, comment.created_at.strftime("%Y年%m月%d日 %H時%M分")) %>
+          </td>
+          <td class="col-xs-2">
+            <%= link_to "削除", admin_comment_path(comment), method: :delete, data: { confirm: '削除します。 よろしいですか？' }, class: "btn btn-danger" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<%= link_to "TOPに戻る", admin_homes_path, class: "btn btn-info ml-1" %>

@@ -5,11 +5,11 @@ class Comment < ApplicationRecord
   def self.search_for(content,method)
     return none if content.blank?
       if method == 'forward'
-        Comment.where('name LIKE ?', content + '%')
+        Comment.where('body LIKE ?', content + '%')
       elsif method == 'backword'
-        Comment.where('name LIKE ?', '%' + content)
+        Comment.where('body LIKE ?', '%' + content)
       else
-        Comment.where('name LIKE ?', '%' + content + '%')
+        Comment.where('body LIKE ?', '%' + content + '%')
       end
   end
 

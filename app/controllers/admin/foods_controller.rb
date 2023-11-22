@@ -1,26 +1,18 @@
-class Admin::FoodController < ApplicationController
+class Admin::FoodsController < ApplicationController
   before_action :authenticate_admin!
-  before_action :set_food, only: [:show, :edit, :destroy]
+  before_action :set_food, only: [:destroy]
 
   def index
-    @foods = Food.page(params[:page]).per(10)
-    @food = Food.all
-    @genres = Genre.all
-  end
-
-  def show
-  end
-
-  def edit
+    @foods = Food.all.page(params[:page]).per(10)
   end
 
   def destroy
     if @food.destroy!
       flash[:alert] = "食品情報が削除されました"
     else
-      flash[:alert] = "指定された食品情報は存在しません"
+      flash[:alert] = "食品情報の削除に失敗しました"
     end
-    redirect_to admin_family_path(@family)
+    redirect_to admin_foods_path
   end
 
   private

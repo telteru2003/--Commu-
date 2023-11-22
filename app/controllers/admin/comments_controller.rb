@@ -1,23 +1,25 @@
 class Admin::CommentsController < ApplicationController
   before_action :authenticate_admin!
+  before_action :set_comment, only: [:destroy]
 
   def index
-    @comments = Comment.page(params[:page]).per(10) # 1ページあたりのコメント数を指定
-
-    @comments = Comment.page(params[:page])
+    @comments = Comment.all.page(params[:page]).per(10)
   end
 
   def destroy
-    @food = Food.find(params[:food_id])
     if @comment.destroy!
-      flash[:alert] = "食品情報が削除されました"
+      flash[:alert] = "コメントが削除されました"
     else
-      flash[:alert] = "指定された食品情報は存在しません"
+      flash[:alert] = "コメントの削除に失敗しました"
     end
-    redirect_to admin_comment_path(@comment)
+    redirect_to admin_comments_path
   end
 
   private
+
+  def set_comment
+    @comment = Comment.find(params[:id])
+  end
 
   def comment_params
     params.require(:comment).permit(:body)

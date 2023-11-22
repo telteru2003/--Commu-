@@ -1,4 +1,4 @@
-
+<h3>食品類一覧</h3>
 <div class="container">
   <table class="table">
     <thead>
@@ -17,7 +17,7 @@
     </thead>
 
     <tbody>
-      <% foods.each do |food| %>
+      <% @foods.each do |food| %>
         <tr>
           <td class="info col-xs-1">
             <%= food.id %>
@@ -53,3 +53,4 @@
     </tbody>
   </table>
 </div>
+<%= link_to "TOPに戻る", admin_homes_path, class: "btn btn-info ml-1" %>

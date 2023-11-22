@@ -10,7 +10,7 @@ class Admin::FamiliesController < ApplicationController
     if @family.destroy!
       flash[:alert] = "グループが削除されました"
     else
-      flash[:alert] = "エラーにより削除できません"
+      flash[:alert] = "グループの削除に失敗しました"
     end
     redirect_to admin_families_path
   end

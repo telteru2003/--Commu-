@@ -7,15 +7,12 @@ class Admin::UsersController < ApplicationController
   end
 
   def update
-    # is_active フラグを反転
     @user.update(is_active: !@user.is_active)
-
     if @user.save
       flash[:notice] = "ユーザー情報が更新されました"
     else
       flash[:alert] = "ユーザー情報の更新に失敗しました"
     end
-
     redirect_to admin_users_path
   end
 
