@@ -26,17 +26,24 @@
         <tr>
           <th scope="col">画像</th>
           <th scope="col">メンバー名</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td><%= image_tag @owner.get_profile_image, size:"25x25" %></td>
           <td><%= @owner.nickname.present? ? @owner.nickname : @owner.name %></td>
+          <td></td>
         </tr>
       <% @users.each do |user| %>
         <tr>
           <td><%= image_tag user.get_profile_image, size:"25x25" %></td>
           <td><%= user.nickname.present? ? user.nickname : user.name %></td>
+          <td>
+              <% if @family.owner_id == current_user.id %>
+                <%= link_to "削除", family_user_path, method: :delete, data: { confirm: '削除します。 よろしいですか？' }, class: "btn btn-danger" %>
+              <% end %>
+          </td>
         </tr>
       <% end %>
 
