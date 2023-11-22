@@ -18,16 +18,6 @@
       </div>
     </div>
   <% end %>
-
 <% else %>
-  <%= form_with url: search_path, method: :get, local: true do |f| %>
-    <div class="d-flex justify-content-end mt-2 mr-3" >
-      <%= f.text_field :content, placeholder: "商品検索", class:"form-control" %>
-      <%= f.select :method, options_for_select({"前方一致" => "forward", "後方一致" => "backward", "部分一致" => "partial"}, selected: "forward"), {}, class: "form-control form-select rounded-pill" %>
-      <%= button_tag type: "submit", class:"btn btn-outline-secondary m1-2" do %>
-        <i class="fa-solid fa-magnifying-glass"></i>
-      <% end %>
-    </div>
-  <% end %>
 
 <% end %>

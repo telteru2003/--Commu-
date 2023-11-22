@@ -5,5 +5,7 @@ class FamilyUser < ApplicationRecord
   validates :family_id, presence: true
   validates :user_id, uniqueness: { scope: :family_id }
   validates :family_id, uniqueness: { scope: :user_id }
-  # enum status: [:pending, :approved, :rejected]
+
+  # 追加: 作成者の登録
+  scope :owner, -> { where(role: 'owner') }
 end

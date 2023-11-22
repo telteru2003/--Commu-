@@ -10,10 +10,10 @@ Rails.application.routes.draw do
   namespace :admin do
     get 'homes' => 'homes#index', as: 'homes'
   	get '/search'=>'search#search'
-  	resources :families, only: [:index, :show, :edit, :destroy]
-    resources :users, only: [:index, :show, :edit, :destroy]
-  	resources :foods, only: [:index, :show, :edit, :destroy]
-  	resources :comments, only: [:index, :show, :edit, :destroy]
+  	resources :families, only: [:index, :destroy]
+    resources :users, only: [:index, :destroy]
+  	resources :foods, only: [:index, :destroy]
+  	resources :comments, only: [:index, :destroy]
   end
 
 # 【ユーザー】 新規登録・ログイン・ログアウト

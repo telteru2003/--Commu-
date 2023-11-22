@@ -12,7 +12,7 @@ class Admin::FamiliesController < ApplicationController
     else
       flash[:alert] = "エラーにより削除できません"
     end
-    redirect_to admin_family_path
+    redirect_to admin_families_path
   end
 
   private
