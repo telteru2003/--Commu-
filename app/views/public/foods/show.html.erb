@@ -32,6 +32,10 @@
           <td class="col-md-7"><%= @food.jan_code %></td>
         </tr>
         <tr>
+          <td class="col-md-2" style="background-color: #EEEEEE">投稿者</td>
+          <td class="col-md-7"><%= @food.user.nickname.present? ? @food.user.nickname : @food.user.name %></td>
+        </tr>
+        <tr>
           <td class="col-md-2" style="background-color: #EEEEEE">食品類：名称</td>
           <td class="col-md-7"><%= @food.name %></td>
         </tr>
@@ -48,7 +52,7 @@
           <td class="col-md-7"><%= @food.expiration_date.strftime("%Y年%m月%d日") %></td>
         </tr>
         <tr>
-          <td class="col-md-2" style="background-color: #EEEEEE">ステータス</td>
+          <td class="col-md-2" style="background-color: #EEEEEE">消費状況</td>
           <td class="col-md-7"><%= @food.consume_status %></td>
         </tr>
       </tbody>

@@ -60,8 +60,8 @@
         <th scope="col">食品名</th>
         <th scope="col"></th>
         <th scope="col">賞味 / 消費期限</th>
-        <th scope="col">投稿者</th>
         <th scope="col">保管場所</th>
+        <th scope="col">消費状況</th>
         <th scope="col"></th>
       </tr>
     </thead>
@@ -88,8 +88,8 @@
           <% end %>
         </td>
         <td><%= food.expiration_date.strftime("%Y年%m月%d日") %></td>
-        <td><%= food.user.nickname.present? ? food.user.nickname : food.user.name %></td>
         <td><%= food.place&.name %></td>
+        <td><%= food.consume_status %></td>
         <td>
           <%= link_to "詳細", food_path(food), class:"btn btn-info ml-1"%>
           <%= link_to "編集", edit_food_path(food), class:"btn btn-success ml-1"%>

@@ -8,7 +8,7 @@ class Food < ApplicationRecord
 
   validates :name, presence: true
 
-  enum consume_status: { 未消費: 0, 消費済み: 1 }
+  enum consume_status: { 未消費: 0, 消費済み: 1,購入予定: 2 }
   enum genre: { 食料: 0, 飲料: 1, 調味料: 2, その他: 3 }
 
   def likes_count
