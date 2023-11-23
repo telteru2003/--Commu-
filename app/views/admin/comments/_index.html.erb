@@ -15,7 +15,7 @@
     </thead>
 
     <tbody>
-      <% comments.each do |comment| %>
+      <% comments.order(created_at: :desc).each do |comment| %>
         <tr>
           <td class="info col-xs-1">
             <%= comment.id %>
@@ -38,4 +38,5 @@
       <% end %>
     </tbody>
   </table>
+  <%= paginate @comments %>
 </div>

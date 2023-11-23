@@ -2,9 +2,7 @@ class Public::CommentsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @comments = Comment.page(params[:page]).per(10) # 1ページあたりのコメント数を指定
-
-    @comments = Comment.page(params[:page])
+    @comments = Comment.page(params[:page]).per(10)
   end
 
   def create

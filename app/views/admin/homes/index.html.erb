@@ -3,9 +3,13 @@
     <div class="col-md-6 mb-4">
       <div class="card">
         <div class="card-header">
-          <h3>最新のグループ</h3>
+          <h3>グループ <i class="fa-solid fa-house"></i></h3>
+          <% total_family_count = @all_families.count %>
+          <% display_count = [total_family_count, 3].min %>
+          <%= "（全 #{total_family_count} 件のうち最新 #{display_count} 件を表示）" %>
         </div>
         <div class="card-body">
+          <% if total_family_count > 0 %>
           <table class="table">
             <thead>
               <tr style="background-color: #EEEEEE;">
@@ -38,6 +42,9 @@
               <% end %>
             </tbody>
           </table>
+          <% else %>
+            <p style="color: red;">レコードがありません</p>
+          <% end %>
         </div>
       </div>
     </div>
@@ -45,9 +52,13 @@
     <div class="col-md-6 mb-4">
       <div class="card">
         <div class="card-header">
-          <h3>最新のユーザー</h3>
+          <h3>ユーザー <i class="fa-solid fa-user"></i></h3>
+          <% total_user_count = @all_users.count %>
+          <% display_user_count = [total_user_count, 3].min %>
+          <%= "（全 #{total_user_count} 件のうち最新 #{display_user_count} 件を表示）" %>
         </div>
         <div class="card-body">
+          <% if total_user_count > 0 %>
           <table class="table">
             <thead>
               <tr style="background-color: #EEEEEE;">
@@ -90,6 +101,9 @@
               <% end %>
             </tbody>
           </table>
+          <% else %>
+            <p style="color: red;">レコードがありません</p>
+          <% end %>
         </div>
       </div>
     </div>
@@ -99,9 +113,13 @@
     <div class="col-md-6 mb-4">
       <div class="card">
         <div class="card-header">
-          <h3>最新の食品類</h3>
+          <h3>食品類 <i class="fa-solid fa-utensils"></i></h3>
+          <% total_food_count = @all_foods.count %>
+          <% display_food_count = [total_food_count, 3].min %>
+          <%= "（全 #{total_food_count} 件のうち最新 #{display_food_count} 件を表示）" %>
         </div>
         <div class="card-body">
+          <% if total_food_count > 0 %>
           <table class="table">
             <thead>
               <tr style="background-color: #EEEEEE;">
@@ -134,6 +152,9 @@
               <% end %>
             </tbody>
           </table>
+          <% else %>
+            <p style="color: red;">レコードがありません</p>
+          <% end %>
         </div>
       </div>
     </div>
@@ -141,9 +162,13 @@
     <div class="col-md-6 mb-4">
       <div class="card">
         <div class="card-header">
-          <h3>最新のコメント</h3>
+          <h3>コメント <i class="fa-solid fa-comments"></i></h3>
+          <% total_comment_count = @all_comments.count %>
+          <% display_comment_count = [total_comment_count, 3].min %>
+          <%= "（全 #{total_comment_count} 件のうち最新 #{display_comment_count} 件を表示）" %>
         </div>
         <div class="card-body">
+          <% if total_comment_count > 0 %>
           <table class="table">
             <thead>
               <tr style="background-color: #EEEEEE;">
@@ -172,6 +197,9 @@
               <% end %>
             </tbody>
           </table>
+          <% else %>
+            <p style="color: red;">レコードがありません</p>
+          <% end %>
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ class Admin::FoodsController < ApplicationController
 
   def index
     @foods = Food.all.page(params[:page]).per(10)
+    @all_foods = Food.order(created_at: :desc)
   end
 
   def destroy

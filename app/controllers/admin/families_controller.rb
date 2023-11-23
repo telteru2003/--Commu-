@@ -3,7 +3,8 @@ class Admin::FamiliesController < ApplicationController
   before_action :set_family, only: [:destroy]
 
   def index
-    @families = Family.page(params[:page]).per(10)
+    @families = Family.all.page(params[:page]).per(10)
+    @all_families = Family.order(created_at: :desc)
   end
 
   def destroy

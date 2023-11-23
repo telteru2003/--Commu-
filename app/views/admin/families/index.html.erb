@@ -1,4 +1,5 @@
-  <h3>グループ一覧</h3>
+  <% total_family_count = @all_families.count %>
+  <h3>グループ一覧 <%= "（全 #{total_family_count} 件）" %></h3>
   <div class="container">
     <table class="table">
       <thead>
@@ -13,7 +14,7 @@
       </thead>
 
       <tbody>
-        <% @families.each do |family| %>
+        <% @families.order(created_at: :desc).each do |family| %>
          <tr>
           <td class="info col-xs-1">
             <%= family.id %>

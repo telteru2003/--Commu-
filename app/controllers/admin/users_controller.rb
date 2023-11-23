@@ -4,6 +4,7 @@ class Admin::UsersController < ApplicationController
 
   def index
     @users = User.all.page(params[:page]).per(10)
+    @all_users = User.order(created_at: :desc)
   end
 
   def update

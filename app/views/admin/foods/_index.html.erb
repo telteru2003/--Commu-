@@ -19,7 +19,7 @@
     </thead>
 
     <tbody>
-      <% foods.each do |food| %>
+      <% foods.order(created_at: :desc).each do |food| %>
         <tr>
           <td class="info col-xs-1">
             <%= food.id %>

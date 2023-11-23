@@ -15,7 +15,7 @@
       </thead>
 
       <tbody>
-        <% families.each do |family| %>
+        <% families.order(created_at: :desc).each do |family| %>
          <tr>
           <td class="info col-xs-1">
             <%= family.id %>
