@@ -1,5 +1,6 @@
 class Family < ApplicationRecord
   belongs_to :owner, class_name: 'User', foreign_key: :owner_id
+  has_many :users
   has_many :family_users, dependent: :destroy
   has_many :memberships,  dependent: :destroy
   has_many :users, through: :family_users
@@ -14,7 +15,6 @@ class Family < ApplicationRecord
     family_users.count
   end
 
-  # ユーザがコミュニティに所属していればtrueを返す
   def user_membership?(user)
     users.include?(user)
   end

@@ -62,6 +62,9 @@ Rails.application.routes.draw do
         delete 'destroy', to: 'families#destroy', as: :delete_families
       end
       resource :memberships, only: %i[index create destroy]
+        member do
+          delete 'destroy', to: 'memberships#destroy', as: :delete_membership
+        end
       resource :family_users, only: %i[index create destroy]
     end
 

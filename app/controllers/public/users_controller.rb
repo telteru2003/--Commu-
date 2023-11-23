@@ -1,4 +1,6 @@
 class Public::UsersController < ApplicationController
+  before_action :set_family
+  before_action :set_user, only: [:edit, :update, :quit, :destroy]
 
   def index
     @users = User.all
@@ -9,15 +11,15 @@ class Public::UsersController < ApplicationController
       redirect_to root_path, alert: 'ゲストユーザーはこのページにアクセスできません'
     else
       @user = User.find(params[:id])
+      @is_entry_membership = Membership.find_by(user_id: @user.id)
+      @is_entry_family_user = FamilyUser.find_by(user_id: @user.id)
     end
   end
 
   def edit
-    @user = current_user
   end
 
   def update
-    @user = current_user
     if @user.update(user_params)
       flash[:notice] = "ユーザー情報を更新しました"
       redirect_to show_user_path(@user)
@@ -28,11 +30,9 @@ class Public::UsersController < ApplicationController
   end
 
   def quit
-    @user = current_user
   end
 
   def destroy
-    @user = current_user
     if @user.email == 'guest@example.com'
       @user.name = 'ゲストユーザー'
       @user.is_active = true
@@ -59,6 +59,14 @@ class Public::UsersController < ApplicationController
   end
 
   private
+
+  def set_family
+    @family = Family.find_by(params[:id])
+  end
+
+  def set_user
+    @user = current_user
+  end
 
   def user_params
     params.require(:user).permit(:name, :nickname, :email, :profile_image, :family_id)
