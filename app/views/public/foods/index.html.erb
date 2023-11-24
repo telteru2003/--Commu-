@@ -1,7 +1,14 @@
+<style>
+  .gray-text {
+    color: gray;
+    font-size: 90%;
+  }
+</style>
+
 <div class="container">
   <% if @user.email == 'guest@example.com' %>
     <div class="alert alert-info mt-3">
-      ゲストユーザーは<%= link_to '食品類の新規投稿', new_food_path %>および食品類の閲覧のみ可能です。
+      ゲストユーザーは<%= link_to '食品類の新規投稿', new_food_path %>および食品類の閲覧が可能です。
     </div>
     <%= render "index" %>
   <% elsif @user.family.present? || @user.family_users.first.present? %>

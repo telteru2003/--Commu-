@@ -14,6 +14,7 @@ class Public::UsersController < ApplicationController
       @is_entry_membership = Membership.find_by(user_id: @user.id)
       @is_entry_family_user = FamilyUser.find_by(user_id: @user.id)
     end
+      @likes = Like.page(params[:page]).per(10)
   end
 
   def edit

@@ -51,6 +51,7 @@
             <%= link_to "削除", admin_food_path(food), method: :delete, data: { confirm: '削除します。 よろしいですか？' }, class: "btn btn-danger" %>
           </td>
         </tr>
+        <%= paginate @foods %>
       <% end %>
     </tbody>
   </table>

@@ -34,6 +34,7 @@
             <%= link_to "削除", admin_comment_path(comment), method: :delete, data: { confirm: '削除します。 よろしいですか？' }, class: "btn btn-danger" %>
           </td>
         </tr>
+        <%= paginate @comments %>
       <% end %>
     </tbody>
   </table>

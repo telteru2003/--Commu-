@@ -17,7 +17,7 @@ class Public::FoodsController < ApplicationController
       sort_direction = params[:sort_by_expiration_date] == "desc" ? "DESC" : "ASC"
       @foods = @foods.order("expiration_date #{sort_direction}")
     end
-    @foods = @foods.includes(:likes)
+    @foods = @foods.includes(:likes).page(params[:page]).per(10)
   end
 
   def new

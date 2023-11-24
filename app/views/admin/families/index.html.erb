@@ -35,6 +35,7 @@
             <%= link_to "削除", admin_family_path(family), method: :delete, data: { confirm: '削除します。 よろしいですか？' }, class: "btn btn-danger" %>
           </td>
          </tr>
+        <%= paginate @families %>
         <% end %>
       </tbody>
     </table>
