@@ -1,24 +1,97 @@
-# README
+# ⓔ-Commu!（エーコミュ！）
+​
+## サイト概要
+### サイトテーマ
+フードロス削減を目的とした、食品類の期限などを登録して同居人と台所事情を共有し、コメントを投稿できるクローズなコミュニティサイト
+​
+### テーマを選んだ理由
+自宅の冷蔵庫に眠っている食品類のフードロスを減らす為、家族へのフード管理の一助として考案しました。<br >
+巣ごもり需要が高まる昨今の情勢から、外食を控え自宅での食事の頻度が増えた一方、食品類の廃棄も増えてしまうことに頭を悩ませてしまう方にとって必要だと感じたため制作しました。<br >
+特に料理をする方にとっては食品類のストックを把握するためのツールとして、また同居人がいる方にはコミュニケーションツールとして利用されることで毎日の食事にまつわることへの効率化が期待されます。
+​
+### ターゲットユーザ
+- 食品類の仕入れにより、期限等の管理に頭を悩ませる方
+- どの献立にするか、またどの食品類を使うかの判断をより視覚的に効率化させたい方
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### 主な利用シーン
+- 同居人がいる方で、自宅にある食品類の情報共有をすることで同居人と食事にまつわるコミュニケーションを図りたい場面<br >
+- 献立を考える時、どの食品類から消費するかを判断したい場面
 
-Things you may want to cover:
+### 設計書
 
-* Ruby version
+### 開発環境
 
-* System dependencies
+- OS：Windows 11 Home
+- 言語：HTML, CSS, JavaScript, Ruby, SQL
+- フレームワーク：Ruby on Rails (バージョン: 6.1.7.4)
+- JSライブラリ：jQuery
+- IDE：Cloud9
 
-* Configuration
+#### フロントエンド
 
-* Database creation
+このプロジェクトでは、Bootstrapを使用してフロントエンドのデザインを構築しています。Bootstrapは、簡単に使えるCSSフレームワークで、プロジェクトの外観と感触を整えるのに役立ちます。
 
-* Database initialization
+#### バックエンド
 
-* How to run the test suite
+- Ruby on Railsのバージョン: 6.1.7.4
+- Rubyのバージョン: 3.1.2
 
-* Services (job queues, cache servers, search engines, etc.)
+このプロジェクトはRuby on Railsフレームワークを使用しています。Railsは、Webアプリケーションの迅速な開発と保守を可能にする強力なフレームワークです。
 
-* Deployment instructions
+#### Gem
 
-* ...
+このプロジェクトでは以下のGemを使用しています：
+
+- Kaminari (バージョン: 1.2.1): ページネーションを実装するためのGemです。詳細は[公式ドキュメント](https://github.com/kaminari/kaminari)を参照してください。
+
+    ```ruby
+    gem 'kaminari', '~> 1.2.1'
+    ```
+
+- Devise: 認証機能を提供するGemです。詳細は[公式ドキュメント](https://github.com/heartcombo/devise)を参照してください。
+
+    ```ruby
+    gem 'devise'
+    ```
+
+#### 環境構築
+
+1. Rubyのインストール: プロジェクトを実行するためにRubyのバージョン3.1.2をインストールしてください。
+2. Railsのインストール: 以下のコマンドを使用してRails 6.1.7.4をインストールしてください。
+
+   ```bash
+   gem install rails -v 6.1.7.4
+
+
+### インフラ
+
+このプロジェクトは以下のインフラを使用しています。
+
+#### 開発環境
+
+- **Cloud9（Amazon Linux 2）:**
+  アプリケーションの開発環境としてCloud9を採用しています。Cloud9はオンラインのIDEで、開発者がプロジェクトを柔軟かつ効果的に管理できます。
+
+#### デプロイ
+
+- **EC2（Amazon Linux 2）:**
+  アプリケーションのデプロイにはEC2を使用しています。EC2は柔軟性があり、スケーラビリティに優れた仮想サーバーを提供します。
+
+#### データベース
+
+- **RDS:**
+  アプリケーションのデータベースとしてRDSを使用しています。RDSは管理が容易で拡張性があり、安定したデータベースサービスを提供します。このプロジェクトではRDSを必須としています。
+
+環境構築やデプロイに関する詳細な手順については、プロジェクトのドキュメントを参照してください。
+
+## 使用素材
+
+### アイコン
+- アイコンは [Font Awesome](https://fontawesome.com/) から利用しています。
+
+### ロゴ作成
+- ロゴは [Canva](https://www.canva.com/ja_jp/logos/) を使用して作成しました。
+
+
+### 実装機能リスト
+https://docs.google.com/spreadsheets/d/1w-lfKUyESSGZJyWfCuVNMeNuZ2D1-GH_Tir8CVi86nc/edit?usp=sharing

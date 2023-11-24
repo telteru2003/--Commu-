@@ -1,0 +1,104 @@
+    <div class="row">
+      <div class="d-flex align-items-center ml-1">
+
+        <%= form_tag(foods_path, method: :get, class: "form-inline ml-2") do %>
+          <div class="form-group">
+            <%= label_tag "place_id", "保管場所:" %>
+            <%= select_tag "place_id", options_from_collection_for_select(@places, "id", "name", params[:place_id]), include_blank: "すべて", class: "form-control ml-1" %>
+          </div>
+          <div class="form-group">
+            <%= label_tag "genre", "ジャンル:" %>
+            <%= select_tag "genre", options_for_select([["すべて", ""]] + Food.genres.keys.map { |genre| [Food.human_attribute_name("genre.#{genre}"), genre] }, params[:genre]), class: "form-control ml-1" %>
+          </div>
+          <div class="form-group">
+            <%= label_tag "consume_status", "消費状況:" %>
+            <%= select_tag "consume_status", options_for_select([["すべて", ""]] + Food.consume_statuses.keys.map { |status| [Food.human_attribute_name("consume_status.#{status}"), status] }, params[:consume_status].presence || "0"), class: "form-control ml-1" %>
+          </div>
+          <%= button_tag "条件リセット", type: 'button', class: "btn btn-secondary ml-1", onclick: "resetFilters();" %>
+          <%= submit_tag "絞り込む", class: "btn btn-primary ml-1" %>
+        <% end %>
+
+        <script>
+          function resetFilters() {
+            document.getElementById("place_id").value = "";
+            document.getElementById("genre").value = "";
+            document.getElementById("consume_status").value = "";
+            window.location.href = "<%= foods_path %>"; // 絞り込み条件をリセットしてページを再読み込み
+          }
+        </script>
+
+        <%= form_tag(foods_path, method: :get, class: "form-inline ml-2") do %>
+          <div class="form-group">
+            <%= label_tag "sort_by_expiration_date", "賞味 / 消費期限:" %>
+            <%= select_tag "sort_by_expiration_date", options_for_select({ "作成順" => "" , "早い順" => "asc", "遅い順" => "desc" }, params[:sort_by_expiration_date] || "asc"), class: "form-control ml-1" %>
+          </div>
+          <%= hidden_field_tag "place_id", params[:place_id] %>
+          <%= hidden_field_tag "genre", params[:genre] %>
+          <%= hidden_field_tag "consume_status", params[:consume_status] %>
+          <%= submit_tag "並び替え", class: "btn btn-primary ml-1" %>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+
+  <% if @foods.any? %>
+    <table class="table">
+      <thead>
+        <tr style="background-color: #EEEEEE">
+          <th scope="col"></th>
+          <th scope="col">食品名</th>
+          <th scope="col"></th>
+          <th scope="col">賞味 / 消費期限</th>
+          <th scope="col">保管場所</th>
+          <th scope="col">消費状況</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @foods.each do |food| %>
+        <tr>
+          <td rowspan = "2">
+            <%= link_to(food_path(food)) do %>
+              <%= image_tag food.get_foods_image %>
+            <% end %>
+          </td>
+          <td>
+            <%= food.name %>
+          </td>
+          <td>
+            <% if current_user.liked?(food) %>
+              <%= link_to food_like_path(food, food.likes.find_by(user: current_user)), method: :delete, remote: true do %>
+                <span style="color:red;">❤︎<%= food.likes_count %></span>
+              <% end %>
+            <% else %>
+              <%= link_to food_likes_path(food), method: :post, remote: true do %>
+                <span>❤︎<%= food.likes_count %></span>
+              <% end %>
+            <% end %>
+          </td>
+          <td><%= food.expiration_date.strftime("%Y年%m月%d日") %></td>
+          <td><%= food.place&.name %></td>
+          <td><%= food.consume_status %></td>
+          <td>
+            <%= link_to "詳細", food_path(food), class:"btn btn-info ml-1"%>
+            <%= link_to "編集", edit_food_path(food), class:"btn btn-success ml-1"%>
+          </td>
+        </tr>
+        <tr class="table-borderless">
+          <td colspan="6">
+            <% latest_comments = food.comments.order(created_at: :desc).limit(5) %>
+            <% latest_comments.each_with_index do |latest_comment, index| %>
+              <% comment_icon = index.odd? ? 'fa-regular' : 'fa-solid' %>
+              <i class="<%= comment_icon %> fa-comment"></i>
+              <%= truncate(latest_comment.body, length: 15) %>　　　<% end %>
+
+          </td>
+        <% end %>
+        <% else %>
+        <tr>
+          <td colspan="7">該当の食品類は存在しません。</td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
