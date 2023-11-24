@@ -7,7 +7,7 @@ class Admin::SearchController < ApplicationController
     @method = params[:method]
 
     # ポリモーフィックな検索を行う
-    @records = perform_search(@model, @content, @method)
+    @records = perform_search(@model, @content, @method).page(params[:page]).per(10)
   end
 
   private
