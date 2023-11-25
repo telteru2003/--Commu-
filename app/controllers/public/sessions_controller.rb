@@ -25,13 +25,10 @@ class Public::SessionsController < Devise::SessionsController
   protected
 
   def after_sign_in_path_for(resource)
-    flash[:notice] = "ログインしました"
-    puts "User #{resource.email} signed in at #{Time.now}"
     foods_path
   end
 
   def after_sign_out_path_for(resource)
-    flash[:notice] = "ログアウトしました"
     root_path
   end
 

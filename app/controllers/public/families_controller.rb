@@ -26,6 +26,7 @@ class Public::FamiliesController < ApplicationController
   def show
     @users = @family.users
     @owner = @family.owner
+    @is_entry_family_user = FamilyUser.find_by(user_id: @user.id)
   end
 
   def edit

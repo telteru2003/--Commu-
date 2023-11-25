@@ -16,6 +16,8 @@
         <%= link_to 'グループ削除', family_path(@family), method: :delete,  class: "dropdown-item text-danger bg-transparent", data: { confirm: "グループを削除します。 よろしいですか？" } %>
       </div>
     </div>
+  <% elsif @user.family_users.first.present? %>
+    <p><%= link_to 'グループ退会', family_family_users_path(@is_entry_family_user.family, user_id: current_user.id), method: :delete, class: "btn btn-danger ml-1", data: { confirm: "本当にグループを退出しますか？" } %></p>
   <% end %>
 </div>
 
