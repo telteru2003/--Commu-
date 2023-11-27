@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   has_one_attached :profile_image
 
-  devise :invitable, :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
   belongs_to :family,     optional: true
