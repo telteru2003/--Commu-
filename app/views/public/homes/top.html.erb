@@ -1,12 +1,87 @@
-<% provide(:title, "e-Commu!") %>
-<div class="text-center" margin_top="100">
-    <h1 style="font-weight: bold;  margin: 30px auto;"></h1>
-</div>
-    <div class="row">
-        <div class="mx-auto align-items-center; text-center">
-top
-        <div class="col-xs-6">
-        <%#= image_tag "about.jpg", alt: "cake1", :size =>'250x200' %>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #495057;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #FFEDB3;
+            color: #444;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .intro-section {
+            text-align: center;
+            padding: 50px;
+            position: relative;
+        }
+
+        .intro-section::before {
+            content: '';
+            background: url(<%= asset_path 'food.jpg' %>);
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.5; /* 透明度の設定 */
+            z-index: -1; /* 背景画像をロゴの前に表示するための設定 */
+        }
+
+        .logo {
+            width: 100;
+            height: auto;
+            position: relative;
+            z-index: 1; /* ロゴを背景画像の上に表示するための設定 */
+        }
+
+        .site-description {
+            margin-top: 20px;
+        }
+
+        .target-users {
+            margin-top: 30px;
+        }
+
+        .use-cases {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://github.com/telteru2003/e-Commu/assets/135404018/c8120133-1ed9-4d62-a2ff-63829cd609fb" alt="e-Commu!ロゴ" class="logo">
+        <h1>e-Commu!（エーコミュ！）</h1>
+    </div>
+
+    <div class="intro-section">
+        <h2>ABOUT</h2>
+        <div class="site-description">
+            <p> フードロス削減を目的とした、食品類の期限などを登録して同居人と台所事情を共有し、コメントといいねができるコミュニティサイト</p>
         </div>
+
+        <div class="target-users">
+            <h3>TARGET</h3>
+            <p> 食品類の仕入れにより、期限等の管理に頭を悩ませる方</p>
+            <p> どの献立にするか、またどの食品類を使うかの判断をより視覚的に効率化させたい方</p>
+        </div>
+
+        <div class="use-cases">
+            <h3>SCENE</h3>
+            <p> 同居人がいる方で、自宅にある食品類の情報共有をすることで同居人と食事にまつわるコミュニケーションを図りたい場面</p>
+            <p> 献立を考える時、どの食品類から消費するかを判断したい場面</p>
         </div>
     </div>
+</body>
+</html>
