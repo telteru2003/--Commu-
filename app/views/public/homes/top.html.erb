@@ -1,69 +1,3 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
-            color: #495057;
-            margin: 0;
-            padding: 0;
-        }
-
-        .header {
-            background-color: #FFEDB3;
-            color: #444;
-            text-align: center;
-            padding: 20px;
-        }
-
-        h1 {
-            font-family: 'Segoe Script', cursive; /* 'Segoe Script' フォントを指定 */
-        }
-
-        .intro-section {
-            text-align: center;
-            padding: 50px;
-            position: relative;
-        }
-
-        .intro-section::before {
-            content: '';
-            background: url(<%= asset_path 'food.jpg' %>);
-            background-size: cover;
-            background-position: center;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.5; /* 透明度の設定 */
-            z-index: -1; /* 背景画像をロゴの前に表示するための設定 */
-        }
-
-        .logo {
-            width: 100;
-            height: auto;
-            position: relative;
-            z-index: 1; /* ロゴを背景画像の上に表示するための設定 */
-        }
-
-        .site-description {
-            margin-top: 20px;
-        }
-
-        .target-users {
-            margin-top: 30px;
-        }
-
-        .use-cases {
-            margin-top: 30px;
-        }
-    </style>
-</head>
-<body>
 <strong>
     <div class="header">
         <img src="https://github.com/telteru2003/e-Commu/assets/135404018/c8120133-1ed9-4d62-a2ff-63829cd609fb" alt="e-Commu!ロゴ" class="logo">
@@ -89,5 +23,3 @@
         </div>
     </div>
 </strong>
-</body>
-</html>
