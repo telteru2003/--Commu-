@@ -5,4 +5,40 @@
     <a href="#" class="mx-5 text-dark"><i class="fab fa-instagram fa-2x"></i></a>
     <a href="#" class="mx-1 text-dark"><i class="far fa-envelope fa-2x"></i></a>
   </div>
+
+
+  <!-- モバイル用の固定ボタンを追加 -->
+  <div id="mobileFootNav" class="clearfix">
+    <% if user_signed_in? && @user.present? %>
+  <div class="ftNavBtn"><a href="<%= root_path %>" class="blueButton"><span class="webfontIcon"><i class="fa-solid fa-stop"></i></span><br />トップ</a></div>
+    <% unless @user.email == 'guest@example.com' %>
+  <div class="ftNavBtn"><a href="<%= show_user_path(current_user) %>" class="blueButton"><span class="webfontIcon"><i class="fa-solid fa-user"></i></span><br />マイページ</a></div>
+    <% end %>
+  <div class="ftNavBtn"><a href="<%= foods_path(current_user) %>" class="blueButton"><span class="webfontIcon"><i class="fa-solid fa-utensils"></i></span><br />食品類一覧</a></div>
+  <div class="ftNavBtn"><a href="<%= new_food_path(current_user) %>" class="blueButton"><span class="webfontIcon"><i class="fa-regular fa-square-plus"></i></span><br />新規投稿</a></div>
+    <% if @user.email == 'guest@example.com' %>
+      <div class="ftNavBtn">
+        <%= link_to destroy_user_session_path, method: :delete, class: 'blueButton' do %>
+        <span class="webfontIcon"><i class="fa-solid fa-right-from-bracket"></i></span><br />
+          ログアウト
+        <% end %>
+      </div>
+    <% end %>
+    <% elsif admin_signed_in? %>
+      <div class="ftNavBtn"><a href="<%= admin_families_path %>" class="blueButton"><span class="webfontIcon"><i class="fa-solid fa-house"></i></span><br /></a></div>
+      <div class="ftNavBtn"><a href="<%= admin_users_path %>" class="blueButton"><span class="webfontIcon"><i class="fa-solid fa-user"></i></span><br /></a></div>
+      <div class="ftNavBtn"><a href="<%= admin_foods_path %>" class="blueButton"><span class="webfontIcon"><i class="fa-solid fa-utensils"></i></span><br /></a></div>
+      <div class="ftNavBtn"><a href="<%= admin_comments_path %>" class="blueButton"><span class="webfontIcon"><i class="fa-solid fa-comments"></i></span><br /></a></div>
+    <% else %>
+      <div class="ftNavBtn"><a href="<%= root_path %>" class="blueButton"><span class="webfontIcon"><i class="fa-solid fa-stop"></i></span><br />トップ</a></div>
+      <div class="ftNavBtn"><a href="<%= new_user_registration_path %>" class="blueButton"><span class="webfontIcon"><i class="fa-solid fa-user-plus"></i></span><br />新規登録</a></div>
+      <div class="ftNavBtn"><a href="<%= new_user_session_path %>" class="blueButton"><span class="webfontIcon"><i class="fa-solid fa-right-to-bracket"></i></span><br />ログイン</a></div>
+      <div class="ftNavBtn">
+        <%= link_to sessions_guest_sign_in_path, method: :post, class: 'blueButton' do %>
+          <span class="webfontIcon"><i class="fa-regular fa-user"></i></span><br />
+            簡単ログイン
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 </footer>
