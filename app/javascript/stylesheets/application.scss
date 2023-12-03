@@ -63,12 +63,12 @@ body {
 	#wrap_all { padding-bottom:60px; } // 60px上げる
 }
 
-@media only screen and (max-width: 480px) {
-  #mobileFootNav .ftNavBtn {
-    width: 48%; /* 幅を変更 */
-    margin: 7px 1%;
-  }
-}
+// @media only screen and (max-width: 480px) {
+//   #mobileFootNav .ftNavBtn {
+//     width: 48%; /* 幅を変更 */
+//     margin: 7px 1%;
+//   }
+// }
 /* ボタンデザイン */
 .blueButton .webfontIcon { font-size:20px; line-height:24px; font-weight:normal; }
 .blueButton {

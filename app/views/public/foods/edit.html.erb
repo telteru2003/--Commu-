@@ -27,7 +27,7 @@
               <td class="col-md-7"><%= f.collection_select :place_id, @places, :id, :name, { include_blank: '選択してください' }, { class: 'form-select' } %></td>
             </tr>
             <tr>
-              <td class="col-md-5" style="background-color: #EEEEEE"><%= f.label :"ステータス", class: 'form-label' %></td>
+              <td class="col-md-5" style="background-color: #EEEEEE"><%= f.label :"消費状況", class: 'form-label' %></td>
               <td class="col-md-7"><%= f.select :consume_status, Food.consume_statuses.keys, { include_blank: '選択してください' }, class: 'form-select' %></td>
             </tr>
           </tbody>
