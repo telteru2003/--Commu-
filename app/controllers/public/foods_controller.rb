@@ -23,6 +23,7 @@ class Public::FoodsController < ApplicationController
   def new
     set_foods_and_places
     @food = @user.foods.new
+    @places = Place.all # または必要な条件に基づいて場所を取得するコード
   end
 
   def create
@@ -36,12 +37,24 @@ class Public::FoodsController < ApplicationController
   end
 
   def show
-    set_food_and_places
+    set_food_and_place
     @comments = @food.comments.order(id: :desc).page(params[:page]).per(10)
+    if @user.family.present? || @user.family_users.first&.family
+      render :show
+    else
+      redirect_to foods_path, alert: "他のグループの投稿は閲覧できません"
+    end
+
   end
 
   def edit
-    set_food_and_places
+    set_food_and_place
+    # ユーザーが所属するグループが存在し、かつそのグループに関連するフードであるかを確認
+    if @user.family.present? || @user.family_users.first&.family
+      render :edit
+    else
+      redirect_to foods_path, alert: "他のグループの投稿は編集できません"
+    end
   end
 
   def update
@@ -56,9 +69,7 @@ class Public::FoodsController < ApplicationController
   end
 
   def destroy
-    @user = current_user
     @food = Food.find(params[:id])
-
     if @food
       @food.destroy!
       flash[:alert] = "食品情報が削除されました"
@@ -74,25 +85,25 @@ class Public::FoodsController < ApplicationController
     @user = current_user
   end
 
-def set_foods_and_places
-  if @user.email == 'guest@example.com'
-    # ゲストユーザーの場合はゲストユーザーの投稿のみを取得
-    @foods = Food.includes(:place, :user, :likes).where(user_id: @user.id)
-    @places = []
-  elsif @user.family.present? || @user.family_users.first&.family
-    # グループに所属している場合はグループメンバー全員の投稿を取得
-    family = @user.family || @user.family_users.first&.family
-    user_ids = family.users.pluck(:id) << family.owner.id
-    @foods = Food.includes(:place, :user, :likes).where(user_id: user_ids)
-    @places = family.places
-  else
-    # それ以外の場合はユーザーがいいねした投稿を取得
-    @foods = @user.foods.includes(:place, :likes).where(likes: { user_id: @user.id })
-    @places = []
+  def set_foods_and_places
+    if @user.email == 'guest@example.com'
+      # ゲストユーザーの場合はゲストユーザーの投稿のみを取得
+      @foods = Food.includes(:place, :user, :likes).where(user_id: @user.id)
+      @places = [] # ここで @places を空の配列にしている
+    elsif @user.family.present? || @user.family_users.first&.family
+      # グループに所属している場合はグループメンバー全員の投稿を取得
+      family = @user.family || @user.family_users.first&.family
+      user_ids = family.users.pluck(:id) << family.owner.id
+      @foods = Food.includes(:place, :user, :likes).where(user_id: user_ids)
+      @places = family.places
+    else
+      # それ以外の場合はユーザーがいいねした投稿を取得
+      @foods = @user.foods.includes(:place, :likes).where(likes: { user_id: @user.id })
+      @places = [] # ここでも @places を空の配列にしている
+    end
   end
-end
 
-  def set_food_and_places
+  def set_food_and_place
     set_foods_and_places
     @food = Food.find(params[:id])
   end

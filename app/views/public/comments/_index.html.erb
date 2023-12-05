@@ -11,6 +11,7 @@
         <th scope="col">投稿者</th>
         <th scope="col">コメント内容</th>
         <th scope="col">コメント日時</th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
@@ -21,6 +22,9 @@
           <td><%= comment.user.nickname.present? ? comment.user.nickname : comment.user.name %></td>
           <td><%= comment.body %></td>
           <td><%= comment.created_at.strftime("%Y年%m月%d日 %H時%M分") %></td>
+          <td>
+            <%= link_to "削除", food_comment_path(comment.food, comment), method: :delete, data: { confirm: '削除します。 よろしいですか？' }, class: "btn btn-danger" %>
+          </td>
         </tr>
       <% end %>
     </tbody>

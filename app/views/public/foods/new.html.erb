@@ -17,11 +17,14 @@
     <div class="mb-3">
       <%= form.label :"食品類：名称", class: 'form-label' %>
       <%= form.text_field :name, class: 'form-control' %>
+      <% if @food.errors.has_key?(:name) %>
+        <p class="text-danger"><%= @food.errors[:name].first %></p>
+      <% end %>
     </div>
 
     <div class="mb-3">
       <%= form.label :"保管場所（任意）", class: 'form-label' %>
-      <%= form.collection_select :place_id, @places, :id, :name, { include_blank: '選択してください' }, { class: 'form-select' } %>
+      <%= form.collection_select :place_id, @places || [], :id, :name, { include_blank: '選択してください' }, { class: 'form-select' } %>
     </div>
 
     <div class="mb-3">
