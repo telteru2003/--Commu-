@@ -25,10 +25,10 @@
       </div>
     <% end %>
     <% elsif admin_signed_in? %>
-      <div class="ftNavBtn"><a href="<%= admin_families_path %>" class="blueButton"><span class="webfontIcon"><i class="fa-solid fa-house"></i></span><br /></a></div>
-      <div class="ftNavBtn"><a href="<%= admin_users_path %>" class="blueButton"><span class="webfontIcon"><i class="fa-solid fa-user"></i></span><br /></a></div>
-      <div class="ftNavBtn"><a href="<%= admin_foods_path %>" class="blueButton"><span class="webfontIcon"><i class="fa-solid fa-utensils"></i></span><br /></a></div>
-      <div class="ftNavBtn"><a href="<%= admin_comments_path %>" class="blueButton"><span class="webfontIcon"><i class="fa-solid fa-comments"></i></span><br /></a></div>
+      <div class="ftNavBtn"><a href="<%= admin_families_path %>" class="blueButton"><span class="webfontIcon"><i class="fa-solid fa-house"></i></span><br />グループ</a></div>
+      <div class="ftNavBtn"><a href="<%= admin_users_path %>" class="blueButton"><span class="webfontIcon"><i class="fa-solid fa-user"></i></span><br />ユーザー</a></div>
+      <div class="ftNavBtn"><a href="<%= admin_foods_path %>" class="blueButton"><span class="webfontIcon"><i class="fa-solid fa-utensils"></i></span><br />食品類</a></div>
+      <div class="ftNavBtn"><a href="<%= admin_comments_path %>" class="blueButton"><span class="webfontIcon"><i class="fa-solid fa-comments"></i></span><br />コメント</a></div>
     <% else %>
       <div class="ftNavBtn"><a href="<%= root_path %>" class="blueButton"><span class="webfontIcon"><i class="fa-solid fa-stop"></i></span><br />トップ</a></div>
       <div class="ftNavBtn"><a href="<%= new_user_registration_path %>" class="blueButton"><span class="webfontIcon"><i class="fa-solid fa-user-plus"></i></span><br />新規登録</a></div>

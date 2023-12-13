@@ -18,7 +18,7 @@
       <% @comments.each_with_index do |comment| %>
         <tr>
           <td><%= comment.id %></td>
-          <td><%= image_tag comment.user.get_profile_image, size: "50x50" %></td>
+          <td><%= image_tag comment.user.get_profile_image, size: "50x50", class: "img-fluid" %></td>
           <td><%= comment.user.nickname.present? ? comment.user.nickname : comment.user.name %></td>
           <td><%= comment.body %></td>
           <td><%= comment.created_at.strftime("%Y年%m月%d日 %H時%M分") %></td>
