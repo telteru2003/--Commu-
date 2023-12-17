@@ -1,50 +1,49 @@
 class Public::CommentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_user
+  before_action :set_food_and_comment, only: [:create, :destroy]
 
   def index
     @comments = Comment.page(params[:page]).per(10)
   end
 
   def create
-    @food = Food.find(params[:food_id])
-    @comment = Comment.new(comment_params)
-    @comment.user_id = current_user.id
-    @comment.food_id = @food.id # コメントを特定の食品に関連づける
-    if @comment.body.present?  # コメントが空でないかを確認
-      if @comment.save  # コメントが正常に保存されたら、コメント一覧を取得
-        @comments = @food.comments.reload
-        redirect_to food_path(@food), notice: 'コメントが投稿されました'
-      else  # 保存に失敗した場合の処理
-        redirect_to food_path(@food), alert: 'コメントの投稿に失敗しました'
-      end
-    else  # コメントが空の場合の処理
-      redirect_to food_path(@food), alert: 'コメントは空欄では投稿できません'
+    if @comment.save
+      redirect_to_food_with_notice('コメントが投稿されました')
+    else
+      redirect_to_food_with_alert('コメントの投稿に失敗しました')
     end
   end
 
   def destroy
-    @food = Food.find(params[:food_id])
-    @comment = Comment.find_by(id: params[:id])
     if @comment
-      @food = @comment.food
       @comment.destroy!
-      flash[:notice] = "コメントは正常に削除されました"
-      redirect_to food_path(@food)
+      redirect_to_food_with_notice('コメントは正常に削除されました')
     else
-      flash[:alert] = "コメントの削除に失敗しました"
-      redirect_to food_path(@food)
+      redirect_to_food_with_alert('コメントの削除に失敗しました')
     end
   end
 
-
   private
 
-  def set_user
-    @user = current_user
+  def set_food_and_comment
+    @food = Food.find(params[:food_id])
+    @comment = params[:action] == 'create' ? build_comment : Comment.find_by(id: params[:id])
+    @comments = @food.comments.reload if @comment.persisted?
+  end
+
+  def build_comment
+    @food.comments.build(comment_params.merge(user_id: current_user.id))
   end
 
   def comment_params
     params.require(:comment).permit(:body)
+  end
+
+  def redirect_to_food_with_notice(notice)
+    redirect_to food_path(@food), notice: notice
+  end
+
+  def redirect_to_food_with_alert(alert)
+    redirect_to food_path(@food), alert: alert
   end
 end

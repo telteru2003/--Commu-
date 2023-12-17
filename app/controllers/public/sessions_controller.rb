@@ -6,15 +6,8 @@ class Public::SessionsController < Devise::SessionsController
     sign_in(resource_name, resource)
     yield resource if block_given?
     respond_with resource, location: after_sign_in_path_for(resource)
-
-    # if resource
-    #   resource.generate_and_save_remember_token
-    # else
-    #   redirect_to root_path
-    # end
   end
 
-  # ゲストログイン
   def guest_sign_in
     user = User.guest_login
     sign_in user
@@ -36,7 +29,7 @@ class Public::SessionsController < Devise::SessionsController
     @user = User.find(params[:id])
       if @user
         if @user.valid_password?(params[:user][:password]) &&  (@user.active_for_authentication? == true)
-        redirect_to new_user_registration
+          redirect_to new_user_registration
         end
       end
   end

@@ -44,7 +44,6 @@ class Public::UsersController < ApplicationController
       sign_out(@user)
       @user.destroy!
     end
-
     flash[:notice] = 'ありがとうございました。またのご利用を心よりお待ちしております。'
     redirect_to root_path
   end

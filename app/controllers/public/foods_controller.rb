@@ -23,7 +23,7 @@ class Public::FoodsController < ApplicationController
   def new
     set_foods_and_places
     @food = @user.foods.new
-    @places = Place.all # または必要な条件に基づいて場所を取得するコード
+    @places = Place.all # または必要な条件に基づいて場所を取得
   end
 
   def create
@@ -44,12 +44,10 @@ class Public::FoodsController < ApplicationController
     else
       redirect_to foods_path, alert: "他のグループの投稿は閲覧できません"
     end
-
   end
 
   def edit
     set_food_and_place
-    # ユーザーが所属するグループが存在し、かつそのグループに関連するフードであるかを確認
     if @user.family.present? || @user.family_users.first&.family
       render :edit
     else
@@ -111,4 +109,5 @@ class Public::FoodsController < ApplicationController
   def food_params
     params.require(:food).permit(:name, :expiration_date, :jan_code, :image, :genre, :place_id, :consume_status)
   end
+
 end
