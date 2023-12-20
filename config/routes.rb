@@ -40,42 +40,40 @@ Rails.application.routes.draw do
   end
 
   scope module: :public do
-    get '/search' => 'search#search'
+  	get '/search'=>'search#search'
+    # resources :invitations, only: [:new, :edit]
     resources :places, only: [:create, :destroy]
-
-    resources :foods do
+    resources :foods, only: [:index, :new, :edit, :show, :create, :update, :destroy] do
       resources :likes, only: [:create, :destroy]
       resources :comments, only: [:create, :destroy]
-
       member do
-        get 'show', as: 'show_food'
-        get 'edit', as: 'edit_food'
+        get 'show/:id', to: 'foods#show', as: 'show_food'
+        get 'edit' => 'foods#edit', as: 'edit_food'
       end
     end
-
     resources :family_users, only: [:destroy]
-
-    resources :families do
+    resources :families, only: [:new, :edit, :show, :permit, :create, :update, :destroy] do
       member do
-        get 'show', as: 'show_family'
-        get 'new', as: 'new_family'
-        get 'permit'
-        get 'edit', as: 'edit_family'
-        patch 'update', as: :update_families
-        delete 'destroy', as: :delete_families
+        get 'show/:id', to: 'families#show', as: 'show_family'
+        get 'new' => 'families#new', as: 'new_family'
+        get 'permit' => 'families#permit'
+        get 'edit' => 'families#edit', as: 'edit_family'
+        patch 'update' => 'families#update', as: :update_families
+        delete 'destroy', to: 'families#destroy', as: :delete_families
       end
-
-      resource :memberships, only: %i[index create destroy] do
-        delete 'destroy', on: :member, as: :delete_membership
-      end
-
+      resource :memberships, only: %i[index create destroy]
+        member do
+          delete 'destroy', to: 'memberships#destroy', as: :delete_membership
+        end
       resource :family_users, only: %i[index create destroy]
     end
 
     get "families/:id/memberships" => "families#memberships", as: :memberships
 
     resources :users, only: [:index, :show, :update, :destroy] do
-      delete 'destroy', on: :member
+      member do
+        delete 'destroy', to: 'users#destroy'
+      end
     end
 
     get 'show/users/:id', to: 'users#show', as: 'show_user'
@@ -84,5 +82,4 @@ Rails.application.routes.draw do
     get 'quit/users', to: 'users#quit'
     patch 'out', to: 'users#out'
   end
-
 end

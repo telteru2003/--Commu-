@@ -2,35 +2,28 @@
   <h2 style="padding: 10px; margin: 10px;" class="font-weight-bold my-5"><span style="background-color: #EEEEEE">　会員情報編集　</span></h2>
   <div class="row">
     <%= form_with model: @user, url: '/update/users', method: :patch, local: true do |f| %>
-
-    <div class="col-xs-12">
-
-      <div class="form-group row">
-        <%= f.label :"プロフィール画像",class:"col-4" %>
-        <%= f.file_field :profile_image, accept: "image/*" %>
+      <div class="col-xs-12">
+        <div class="form-group row">
+          <%= f.label :"プロフィール画像",class:"col-4" %>
+          <%= f.file_field :profile_image, accept: "image/*" %>
+        </div>
+        <div class="form-group row">
+          <%= f.label :"名前",class:"col-4" %>
+          <%= f.text_field :name, class:"col-8" %>
+        </div>
+        <div class="form-group row">
+          <%= f.label :"ニックネーム", class:"col-4" %>
+          <%= f.text_field :nickname, class:"col-8" %>
+        </div>
+        <div class="form-group row">
+          <%= f.label :"メールアドレス", class:"col-4" %>
+          <%= f.email_field :email, class:"col-8" %>
+        </div>
+        <div>
+        　<%= f.submit "　編集内容を保存　",class:"btn btn-success mr-5" %>
+          <%= link_to "退会する", quit_users_path,class:"btn btn-danger ml-5" %>
+        </div>
       </div>
-
-      <div class="form-group row">
-        <%= f.label :"名前",class:"col-4" %>
-        <%= f.text_field :name, class:"col-8" %>
-      </div>
-
-      <div class="form-group row">
-        <%= f.label :"ニックネーム", class:"col-4" %>
-        <%= f.text_field :nickname, class:"col-8" %>
-      </div>
-
-      <div class="form-group row">
-        <%= f.label :"メールアドレス", class:"col-4" %>
-        <%= f.email_field :email, class:"col-8" %>
-      </div>
-
-      <div>
-      　<%= f.submit "　編集内容を保存　",class:"btn btn-success mr-5" %>
-        <%= link_to "退会する", quit_users_path,class:"btn btn-danger ml-5" %>
-      </div>
-      <% end %>
-      </div>
-    </div>
+    <% end %>
   </div>
 </div>

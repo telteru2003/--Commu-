@@ -1,36 +1,28 @@
-<head>
-  <style>
-    .custom-div {
-      margin-bottom: 30px;
-    }
-  </style>
-</head>
-
 <header class="shadow-sm">
-<div class="custom-div d-flex justify-content-center align-items-center">
-  <div class="flex-fill">
-        <%= link_to root_path, class:"header-title navbar-brand" do %>
-          <%= image_tag "logo.jpg", alt: "e-Commu", width: 100, height: 40 %>
-        <% end %>
-  </div>
+  <div class="custom-div d-flex justify-content-center align-items-center">
+    <div class="flex-fill">
+      <%= link_to root_path, class: "header-title navbar-brand" do %>
+        <%= image_tag "logo.jpg", alt: "e-Commu", width: 100, height: 40 %>
+      <% end %>
+    </div>
 
-  <nav class="navbar navbar-expand-lg navbar-light">
-    <div class="container">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <% if user_signed_in? && @user.present? %>
             <ul class="navbar-nav ml-auto">
-
               <li class="nav-item active">
                 <% display_name = current_user.nickname.presence || current_user.name.presence || "ゲスト" %>
                 <span class="nav-link text-dark">ようこそ
-                <% unless @user.email == 'guest@example.com' %>
-                  <%= image_tag @user.get_profile_image, size:"25x25" %>
-                <% end %>
-                <%= display_name %> さん</span>
+                  <% unless @user.email == 'guest@example.com' %>
+                    <%= image_tag @user.get_profile_image, size: "25x25" %>
+                  <% end %>
+                  <%= display_name %> さん
+                </span>
               </li>
 
               <li class="nav-item">
@@ -39,66 +31,61 @@
                 <% end %>
               </li>
 
-              <li class="nav-item ">
-                <%= link_to "食品類一覧", foods_path(current_user), class: 'btn btn-outline-secondary mx-3 my-1'%>
+              <li class="nav-item">
+                <%= link_to "食品類一覧", foods_path(current_user), class: 'btn btn-outline-secondary mx-3 my-1' %>
               </li>
 
-              <li class="nav-item ">
+              <li class="nav-item">
                 <%= link_to "新規投稿", new_food_path(current_user), class: 'btn btn-outline-secondary mx-3 my-1' %>
               </li>
 
               <li class="nav-item">
-                <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: 'btn btn-outline-secondary mx-3 my-1'%>
+                <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: 'btn btn-outline-secondary mx-3 my-1' %>
               </li>
-
             </ul>
 
           <% elsif admin_signed_in? %>
             <ul class="navbar-nav ml-auto">
-
               <li class="nav-item">
                 <%= link_to "グループ一覧", admin_families_path, class: 'btn btn-outline-secondary mx-0 my-3' %>
               </li>
 
               <li class="nav-item">
-                <%= link_to "ユーザー一覧", admin_users_path, class:'btn btn-outline-secondary mx-0 my-3'%>
+                <%= link_to "ユーザー一覧", admin_users_path, class: 'btn btn-outline-secondary mx-0 my-3' %>
               </li>
 
               <li class="nav-item">
-                <%= link_to "食品類一覧", admin_foods_path, class:'btn btn-outline-secondary mx-0 my-3'%>
+                <%= link_to "食品類一覧", admin_foods_path, class: 'btn btn-outline-secondary mx-0 my-3' %>
               </li>
 
               <li class="nav-item">
-                <%= link_to "コメント一覧", admin_comments_path, class: 'btn btn-outline-secondary mx-0 my-3'%>
+                <%= link_to "コメント一覧", admin_comments_path, class: 'btn btn-outline-secondary mx-0 my-3' %>
               </li>
-
             </ul>
 
             <div class="nav-item pull-right">
               <%= render "layouts/search" %>
             </div>
 
-                <%= link_to "ログアウト",destroy_admin_session_path, method: :delete,class: 'btn btn-outline-secondary mx-0 my-3'%>
+            <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: 'btn btn-outline-secondary mx-0 my-3' %>
 
           <% else %>
             <ul class="navbar-nav ml-auto">
-
               <li class="nav-item">
-                <%= link_to "新規登録", new_user_registration_path, class: 'btn btn-outline-secondary mx-3 my-1'%>
+                <%= link_to "新規登録", new_user_registration_path, class: 'btn btn-outline-secondary mx-3 my-1' %>
               </li>
 
               <li class="nav-item">
-                <%= link_to "ログイン", new_user_session_path, class: 'btn btn-outline-secondary mx-3 my-1'%>
+                <%= link_to "ログイン", new_user_session_path, class: 'btn btn-outline-secondary mx-3 my-1' %>
               </li>
 
               <li class="nav-item">
-                <%= link_to "簡単ログイン", sessions_guest_sign_in_path, method: :post, class: 'btn btn-outline-secondary mx-3 my-1'%>
+                <%= link_to "簡単ログイン", sessions_guest_sign_in_path, method: :post, class: 'btn btn-outline-secondary mx-3 my-1' %>
               </li>
-
             </ul>
-
-
           <% end %>
-    </div>
+        </div>
+      </div>
+    </nav>
   </div>
 </header>

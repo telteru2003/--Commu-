@@ -2,15 +2,12 @@
   <h2 style="padding: 10px; margin: 10px;" class="font-weight-bold my-5">
     <span style="background-color: #EEEEEE">　マイページ　</span>
   </h2>
-
   <div class="row">
     <div class="d-flex align-items-center">
       <p class="mr-5 font-weight-bold">
         <%= image_tag @user.get_profile_image, size: "100x", class: "img-fluid" %>
       </p>
-
       <p><%= link_to "編集する", edit_users_path, class:"btn btn-success ml-1"%></p>
-
       <% if @user.family.present? %>
         <p><%= link_to "グループ詳細", family_path(@user.family), class: "btn btn-info ml-1" %></p>
       <% elsif @user.family_users.first.present? %>
@@ -21,7 +18,6 @@
         <p><%= link_to "グループ作成", new_family_path, class: "btn btn-primary ml-1" %></p>
         <%= render "layouts/familysearch" %>
       <% end %>
-
     </div>
 
     <table class="table">
@@ -55,41 +51,40 @@
       </tbody>
     </table>
 
-<% if @user.family.present? || @user.family_users.first.present? %>
-  <% if @user == current_user && current_user.likes.any? %>
-    <div class="row mt-5">
-      <h3 class="font-weight-bold">いいねした投稿一覧</h3>
-      <table class="table">
-        <thead>
-          <tr>
-            <th></th>
-            <th>食品類名</th>
-            <th>いいねした日時</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% current_user.likes.each do |like| %>
-          <tr>
-            <td>
-              <%= link_to(image_tag(like.food.get_foods_image, size: "50x50"), like.food) %>
-            </td>
-            <td>
-              <%= link_to(like.food.name, like.food, style: ("color: red;" if like.food.consume_status == '消費済み')) %>
-              <%= raw "(消費済)" if like.food.consume_status == '消費済み' %>
-            </td>
-            <td>
-              <%= content_tag(:span, like.created_at.strftime("%Y年%m月%d日 %H時%M分"), style: (like.food.consume_status == '消費済み' ? "color: red;" : "")) %>
-            </td>
-          </tr>
-            <%= paginate @likes %>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  <% else %>
-  <% end %>
-<% else %>
-<% end %>
-
+    <% if @user.family.present? || @user.family_users.first.present? %>
+      <% if @user == current_user && current_user.likes.any? %>
+        <div class="row mt-5">
+          <h3 class="font-weight-bold">いいねした投稿一覧</h3>
+          <table class="table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>食品類名</th>
+                <th>いいねした日時</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% current_user.likes.each do |like| %>
+              <tr>
+                <td>
+                  <%= link_to(image_tag(like.food.get_foods_image, size: "50x50"), like.food) %>
+                </td>
+                <td>
+                  <%= link_to(like.food.name, like.food, style: ("color: red;" if like.food.consume_status == '消費済み')) %>
+                  <%= raw "(消費済)" if like.food.consume_status == '消費済み' %>
+                </td>
+                <td>
+                  <%= content_tag(:span, like.created_at.strftime("%Y年%m月%d日 %H時%M分"), style: (like.food.consume_status == '消費済み' ? "color: red;" : "")) %>
+                </td>
+              </tr>
+                <%= paginate @likes %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+      <% end %>
+    <% else %>
+    <% end %>
   </div>
 </div>
