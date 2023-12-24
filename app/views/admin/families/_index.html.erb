@@ -1,43 +1,42 @@
 <% if params[:content].present? %>
   <h3>グループ 「<span style="color: red;"><%= params[:content] %></span>」 検索結果</h3>
 <% end %>
-  <div class="container">
-    <table class="table">
-      <thead>
-        <tr style="background-color: #EEEEEE;">
-            <th>ID</th>
-            <th>グループ名</th>
-            <th>作成者</th>
-            <th>メンバー数</th>
-            <th>作成日時</th>
-            <th></th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <% families.order(created_at: :desc).each do |family| %>
-         <tr>
-          <td class="info col-xs-1">
-            <%= family.id %>
-          </td>
-          <td class="text-left">
-            <%= family.name %>
-          </td>
-          <td class="text-left">
-            <%= family.owner.name %>
-          </td>
-          <td class="text-left">
-            <%= family.family_users.count + 1 %>
-          </td>
-          <td class="text-left">
-            <%= content_tag(:span, family.created_at.strftime("%Y年%m月%d日 %H時%M分")) %>
-          </td>
-          <td class="col-xs-2">
-            <%= link_to "削除", admin_family_path(family), method: :delete, data: { confirm: '削除します。 よろしいですか？' }, class: "btn btn-danger" %>
-          </td>
-         </tr>
-        <% end %>
-      </tbody>
-    </table>
-    <%= paginate families %>
-  </div>
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr style="background-color: #EEEEEE;">
+        <th>ID</th>
+        <th>グループ名</th>
+        <th>作成者</th>
+        <th>メンバー数</th>
+        <th>作成日時</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% families.order(created_at: :desc).each do |family| %>
+       <tr>
+        <td class="info col-xs-1">
+          <%= family.id %>
+        </td>
+        <td class="text-left">
+          <%= family.name %>
+        </td>
+        <td class="text-left">
+          <%= family.owner.name %>
+        </td>
+        <td class="text-left">
+          <%= family.family_users.count + 1 %>
+        </td>
+        <td class="text-left">
+          <%= content_tag(:span, family.created_at.strftime("%Y年%m月%d日 %H時%M分")) %>
+        </td>
+        <td class="col-xs-2">
+          <%= link_to "削除", admin_family_path(family), method: :delete, data: { confirm: '削除します。 よろしいですか？' }, class: "btn btn-danger" %>
+        </td>
+       </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate families %>
+</div>
